@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.AS.CardView" parent="Base.Theme">
+        <item name="cardCornerRadius">@dimen/card_radius</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+        <item name="strokeWidth">@dimen/card_Stroke_width</item>
+        <item name="strokeColor">@color/element_background_color</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+    </style>
+
+    <style name="Widget.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/color_surface</item>
+        <item name="backgroundColor">@color/color_surface</item>
+        <item name="itemIconTint">@drawable/selector_bottom_nav</item>
+        <item name="itemTextColor">@drawable/selector_bottom_nav</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavSelected</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNav</item>
+        <item name="elevation">0dp</item>
+    </style>
+</resources>
