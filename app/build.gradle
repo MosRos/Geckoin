@@ -71,7 +71,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     // *** Room ***
-    def room_version = "2.4.0-alpha02"
+    def room_version = "2.3.0"
     implementation("androidx.room:room-runtime:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
@@ -84,12 +84,12 @@ dependencies {
 
 
     // coroutines
-    def coroutines_version = "1.4.2"
+    def coroutines_version = "1.5.2"
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version")
 
     // WorkManager
-    def work_version = "2.5.0"
+    def work_version = "2.6.0"
     // Kotlin + coroutines
     implementation("androidx.work:work-runtime-ktx:$work_version")
     // optional - GCMNetworkManager support
