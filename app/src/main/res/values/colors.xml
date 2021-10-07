@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_primary">#878AFF</color> <!-- #4848B8 -->
-    <color name="color_primary_variant">#7987F3</color>
+    <color name="blue">#5453D6</color>
+    <color name="prm_one">#7658DD</color>
+
+    <color name="color_primary">#7987F3</color> <!-- #4848B8 -->
+    <color name="color_primary_variant">#878AFF</color>
     <color name="color_on_primary">#FFFFFF</color>
 
     <color name="color_secondary">#8B95EA</color>
