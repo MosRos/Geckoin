@@ -1,13 +1,4 @@
-/*
- * *
- *  * Created by Moslem Rostami on 4/10/20 8:33 PM
- *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 4/10/20 8:33 PM
- *
- */
-
 package com.mrostami.geckoin.model
-
 
 import com.google.gson.annotations.SerializedName
 

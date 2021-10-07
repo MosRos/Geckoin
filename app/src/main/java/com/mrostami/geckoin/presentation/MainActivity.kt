@@ -1,11 +1,3 @@
-/*
- * *
- *  * Created by Moslem Rostami on 3/23/20 10:50 PM
- *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 3/7/20 1:31 AM
- *
- */
-
 package com.mrostami.geckoin.presentation
 
 import android.content.DialogInterface

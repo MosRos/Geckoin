@@ -1,14 +1,5 @@
-/*
- * *
- *  * Created by Moslem Rostami on 3/23/20 10:51 PM
- *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 3/23/20 10:51 PM
- *
- */
-
 package com.mrostami.geckoin.presentation
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
