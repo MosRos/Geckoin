@@ -1,11 +1,3 @@
-/*
- * *
- *  * Created by Moslem Rostami on 7/25/20 9:46 PM
- *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 7/25/20 9:46 PM
- *
- */
-
 package com.mrostami.geckoin.model
 
 data class GlobalMarketInfo(

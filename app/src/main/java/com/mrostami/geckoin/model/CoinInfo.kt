@@ -1,11 +1,3 @@
-/*
- * *
- *  * Created by Moslem Rostami on 7/25/20 2:33 PM
- *  * Copyright (c) 2020 . All rights reserved.
- *  * Last modified 7/25/20 2:33 PM
- *
- */
-
 package com.mrostami.geckoin.model
 
 import com.google.gson.annotations.Expose
