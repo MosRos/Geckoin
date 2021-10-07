@@ -57,12 +57,12 @@
         <item name="itemTextColor">@drawable/selector_bottom_nav</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavSelected</item>
         <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNav</item>
-        <item name="elevation">0dp</item>
+        <item name="elevation">4dp</item>
     </style>
 
     <style name="TextAppearance.BottomNavSelected" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/firasans_medium_font</item>
-        <item name="android:textSize">13sp</item>
+        <item name="fontFamily">@font/firasans_medium</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>

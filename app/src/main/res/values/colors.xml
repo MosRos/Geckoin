@@ -14,7 +14,7 @@
 
     <color name="color_background">#EDEDF8</color>
     <color name="color_on_background">#000000</color>
-    <color name="color_surface">#F6F6FB</color>
+    <color name="color_surface">#EBEBF7</color>
     <color name="color_on_surface">#252525</color>
     <color name="color_error">#B00020</color>
     <color name="color_on_error">#FFFFFF</color>
