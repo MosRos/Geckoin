@@ -3,8 +3,10 @@
 
     <color name="blue">#5453D6</color>
     <color name="prm_one">#7658DD</color>
+    <color name="nobatyar_color">#878AFF</color>
+    <color name="matte_purple">#8C7AE6</color>
 
-    <color name="color_primary">#6A67E9</color>
+    <color name="color_primary">#8888FA</color>
     <color name="color_primary_variant">#6F7DEA</color>
     <color name="color_on_primary">#FFFFFF</color>
 
@@ -25,6 +27,7 @@
     <color name="icon_color">#758697</color>
     <color name="divider_color">#3F4E5E</color>
     <color name="element_background_color">#4C5B6A</color>
+    <color name="element_border_color">#546473</color>
 
     <color name="transparent">#00000000</color>
 
