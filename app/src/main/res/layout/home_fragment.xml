@@ -13,11 +13,7 @@
         android:layout_height="150dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:cardElevation="@dimen/card_elevation"
-        app:cardCornerRadius="@dimen/card_radius"
-        app:strokeWidth="@dimen/card_Stroke_width"
-        app:cardBackgroundColor="@color/color_surface"
-        app:strokeColor="@color/element_border_color"
+        style="@style/Widget.AS.CardView"
         app:cardUseCompatPadding="true"
         app:cardPreventCornerOverlap="true"
         android:layout_margin="@dimen/margin_normal">

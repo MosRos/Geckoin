@@ -61,7 +61,7 @@
     </style>
 
     <style name="TextAppearance.BottomNavSelected" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/firasans_medium</item>
+        <item name="fontFamily">@font/firasans_regular</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textStyle">bold</item>

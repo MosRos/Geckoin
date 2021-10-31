@@ -4,8 +4,14 @@
         <item name="cardCornerRadius">@dimen/card_radius</item>
         <item name="cardElevation">@dimen/card_elevation</item>
         <item name="strokeWidth">@dimen/card_Stroke_width</item>
-        <item name="strokeColor">@color/element_background_color</item>
-        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="strokeColor">@color/element_border_color</item>
+        <item name="cardBackgroundColor">@color/element_background_color</item>
+    </style>
+
+    <style name="Widget.AS.AppBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="android:background">?attr/backgroundColor</item>
+        <item name="elevation">10dp</item>
+        <item name="android:elevation">10dp</item>
     </style>
 
     <style name="Widget.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">

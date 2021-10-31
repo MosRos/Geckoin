@@ -6,6 +6,6 @@
         <item name="android:navigationBarColor">@color/color_surface</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:navigationBarDividerColor">@color/divider_color</item>
+        <item name="android:navigationBarDividerColor">@color/color_background</item>
     </style>
 </resources>
