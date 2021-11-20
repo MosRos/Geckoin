@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "Coin")
 data class Coin(
     @SerializedName("id")
-    var id: String? = "xxx",
+    var id: String?,
     @SerializedName("name")
-    var name: String? = "xxx", // 01coin
+    var name: String?, // 01coin
     @SerializedName("symbol")
     @PrimaryKey
-    var symbol: String = "xxx" // zoc
+    var symbol: String
 )
