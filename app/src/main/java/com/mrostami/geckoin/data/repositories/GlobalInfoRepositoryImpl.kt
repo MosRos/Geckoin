@@ -21,8 +21,7 @@ class GlobalInfoRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : GlobalInfoRepository {
     override fun getMarketInfo(forceRefresh: Boolean): Flow<Result<GlobalMarketInfo>> {
-        val result =
-            object : RepositoryResource<Any, GlobalMarketInfo, ResponseBody, CoinGeckoApiError>(
+        val result = object : RepositoryResource<Any, GlobalMarketInfo, ResponseBody, CoinGeckoApiError>(
                 rateLimiter = 30*60*1000L,
                 forceRefresh = forceRefresh
             ) {

@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor(
     val marketInfoState: MutableStateFlow<Result<GlobalMarketInfo>> = MutableStateFlow(Result.Empty)
     fun getGlobalInfo(forceRefresh: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = globalMarketInfoUseCase.invoke(parameters = forceRefresh)
+            val result = globalMarketInfoUseCase.invoke(forceRefresh = forceRefresh)
             marketInfoState.emitAll(result)
         }
     }
