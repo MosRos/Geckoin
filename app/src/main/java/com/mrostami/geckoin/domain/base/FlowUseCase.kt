@@ -35,12 +35,3 @@ abstract class FlowUseCase<in P, R>(private val coroutineDispatcher: CoroutineDi
     protected abstract fun execute(parameters: P, refresh: Boolean): Flow<Result<R>>
 }
 
-// For requests without any input parameter
-
-abstract class SimpleFlowUseCase<out R>(private val coroutineDispatcher: CoroutineDispatcher) {
-    operator fun invoke(forceRefresh: Boolean = true): Flow<Result<R>> = execute(forceRefresh)
-        .catch { e -> emit(Result.Error(Exception(e))) }
-        .flowOn(coroutineDispatcher)
-
-    protected abstract fun execute(refresh: Boolean): Flow<Result<R>>
-}

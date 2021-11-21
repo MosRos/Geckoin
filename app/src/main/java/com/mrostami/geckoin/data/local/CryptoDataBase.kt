@@ -9,9 +9,10 @@ import com.mrostami.geckoin.data.local.dao.GlobalInfoDao
 import com.mrostami.geckoin.model.Coin
 import com.mrostami.geckoin.model.GlobalMarketInfo
 import com.mrostami.geckoin.model.RankedCoin
+import com.mrostami.geckoin.model.TrendCoin
 
 @Database(
-    entities = [Coin::class, RankedCoin::class, GlobalMarketInfo::class],
+    entities = [Coin::class, RankedCoin::class, GlobalMarketInfo::class, TrendCoin::class],
     version = 1,
     exportSchema = false
 )

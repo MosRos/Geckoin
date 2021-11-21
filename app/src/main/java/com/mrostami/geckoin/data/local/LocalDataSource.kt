@@ -4,6 +4,7 @@ import com.mrostami.geckoin.data.local.dao.GlobalInfoDao
 import com.mrostami.geckoin.data.local.dao.PreferencesDao
 import com.mrostami.geckoin.data.local.preferences.PreferencesHelper
 import com.mrostami.geckoin.model.GlobalMarketInfo
+import com.mrostami.geckoin.model.TrendCoin
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
@@ -39,5 +40,29 @@ class LocalDataSource @Inject constructor(
 
     override suspend fun clearGlobalMarketInfo() {
         globalInfoDao.clearGlobalMarketInfo()
+    }
+
+    override suspend fun insertTrendCoin(coin: TrendCoin) {
+        globalInfoDao.insertTrendCoin(coin)
+    }
+
+    override suspend fun insertTrendCoins(coinsList: List<TrendCoin>) {
+        globalInfoDao.insertTrendCoins(coinsList)
+    }
+
+    override suspend fun getTrendCoins(): List<TrendCoin> {
+        return globalInfoDao.getTrendCoins()
+    }
+
+    override suspend fun deleteTrendCoin(coin: TrendCoin) {
+        globalInfoDao.deleteTrendCoin(coin)
+    }
+
+    override suspend fun deleteTrendCoins(coinsList: List<TrendCoin>) {
+        globalInfoDao.deleteTrendCoins(coinsList)
+    }
+
+    override suspend fun clearAllTrendCoins() {
+        globalInfoDao.clearAllTrendCoins()
     }
 }

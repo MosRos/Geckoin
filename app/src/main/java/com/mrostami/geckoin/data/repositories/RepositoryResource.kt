@@ -2,12 +2,14 @@ package com.mrostami.geckoin.data.repositories
 
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.mrostami.geckoin.domain.base.Result
+import com.mrostami.geckoin.presentation.utils.NetworkUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import timber.log.Timber
 
 /**
  * Represents a resource which needs to be loaded from the network and persisted to the Database
@@ -33,14 +35,12 @@ import kotlinx.coroutines.flow.flowOn
 
 abstract class RepositoryResource<in P : Any?, T : Any?, U : Any, V : Any>(
     private val forceRefresh: Boolean = false,
-    private val rateLimiter: Long = 3000,
+    private val rateLimiter: Long = 5000,
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-
-    private var lastRequestTime: Long = 0
-
     abstract suspend fun getFromDatabase(): T?
     abstract suspend fun validateCache(cachedData: T?): Boolean
+    abstract fun shouldFetchFromApi() : Boolean
     abstract suspend fun getFromApi(): NetworkResponse<U, V>
     abstract suspend fun persistData(apiData: U)
 
@@ -50,37 +50,41 @@ abstract class RepositoryResource<in P : Any?, T : Any?, U : Any, V : Any>(
 
     open fun execute(parameters: P) : Flow<Result<T>> = flow {
         val cachedData = getFromDatabase()
+
         if (validateCache(cachedData)) {
             emit(Result.Success(cachedData!!))
         } else {
             emit(Result.Empty)
         }
 
-        if (forceRefresh || System.currentTimeMillis() - lastRequestTime > rateLimiter) {
-            lastRequestTime = System.currentTimeMillis()
+        if (NetworkUtils.isConnected()) {
+            if (shouldFetchFromApi()) {
 
-            emit(Result.Loading)
+                emit(Result.Loading)
 
-            val apiResponse = getFromApi()
-            when (apiResponse) {
-                is NetworkResponse.Success -> {
-                    persistData(apiResponse.body)
-                    val refreshedData = getFromDatabase()
-                    if (validateCache(refreshedData)) {
-                        emit(Result.Success(refreshedData!!))
-                    } else {
-                        emit(Result.Error(Exception("Oops!"), message = "Failed to load cached data"))
+                val apiResponse = getFromApi()
+                when (apiResponse) {
+                    is NetworkResponse.Success -> {
+                        persistData(apiResponse.body)
+                        val refreshedData = getFromDatabase()
+                        if (validateCache(refreshedData)) {
+                            emit(Result.Success(refreshedData!!))
+                        } else {
+                            emit(Result.Error(Exception("Oops!"), message = "Failed to load cached data"))
+                        }
+                    }
+                    is NetworkResponse.ServerError -> {
+                        emit(Result.Error(apiResponse.error))
+                    }
+                    is NetworkResponse.NetworkError -> {
+                        val error = apiResponse.error
+                        emit(Result.Error(error))
                     }
                 }
-                is NetworkResponse.ServerError -> {
-                    val error = apiResponse.body
-                    emit(Result.Error(apiResponse.error))
-                }
-                is NetworkResponse.NetworkError -> {
-                    val error = apiResponse.error
-                    emit(Result.Error(error))
-                }
             }
+        } else {
+            kotlinx.coroutines.delay(350)
+            emit(Result.Error(Exception("No internet connection"), message = "No internet connection"))
         }
     }
 }

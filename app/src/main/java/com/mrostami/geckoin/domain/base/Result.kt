@@ -28,7 +28,7 @@ sealed class Result<out R> {
 
     data class Success<out T>(val data: T) : Result<T>()
     data class Error(val exception: Exception,
-                     val message: String? = null
+                     val message: String? = null,
     ) : Result<Nothing>()
     object Loading : Result<Nothing>()
     object Empty : Result<Nothing>()

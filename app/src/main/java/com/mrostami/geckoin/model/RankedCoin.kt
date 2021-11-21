@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-@Entity()
+@Entity
 data class RankedCoin(
     @SerializedName("id")
     @PrimaryKey @ColumnInfo(name = "id") var id: String = "0xxx" ,

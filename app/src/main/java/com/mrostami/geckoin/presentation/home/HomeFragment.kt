@@ -23,7 +23,8 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getGlobalInfo(forceRefresh = true)
+        viewModel.getGlobalInfo(forceRefresh = false)
+        viewModel.getTrendCoins(forceRefresh = false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,11 +46,34 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
-                        Timber.e("Success Result is: ${result.data}")
+                        Timber.e("Success globalInfo Result is: ${result.data}")
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false
-                        Toast.makeText(requireContext(), "Error: ${result.message}", Toast.LENGTH_SHORT).show()
+                        Timber.e("Global Info Error: ${result.message}")
+                        Toast.makeText(requireContext(), "Error getting global info: ${result.message}", Toast.LENGTH_SHORT).show()
+                    }
+                    is Result.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.trendCoinsState.collect { result ->
+                when(result) {
+                    is Result.Empty -> {
+                        binding.progressBar.isVisible = false
+                    }
+                    is Result.Success -> {
+                        binding.progressBar.isVisible = false
+                        Timber.e("TrendCoins Result is: ${result.data}")
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.isVisible = false
+                        Timber.e("TrendCoins Error: ${result.message}")
+                        Toast.makeText(requireContext(), "Error Getting Trend coins: ${result.message}", Toast.LENGTH_SHORT).show()
                     }
                     is Result.Loading -> {
                         binding.progressBar.isVisible = true
