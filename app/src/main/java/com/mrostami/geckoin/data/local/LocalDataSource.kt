@@ -3,8 +3,7 @@ package com.mrostami.geckoin.data.local
 import com.mrostami.geckoin.data.local.dao.GlobalInfoDao
 import com.mrostami.geckoin.data.local.dao.PreferencesDao
 import com.mrostami.geckoin.data.local.preferences.PreferencesHelper
-import com.mrostami.geckoin.model.GlobalMarketInfo
-import com.mrostami.geckoin.model.TrendCoin
+import com.mrostami.geckoin.model.*
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
@@ -40,6 +39,38 @@ class LocalDataSource @Inject constructor(
 
     override suspend fun clearGlobalMarketInfo() {
         globalInfoDao.clearGlobalMarketInfo()
+    }
+
+    override suspend fun putBtcPriceInfo(info: BitcoinPriceInfo) {
+        globalInfoDao.putBtcPriceInfo(info)
+    }
+
+    override suspend fun getBtcPriceInfo(id: String): BitcoinPriceInfo? {
+        return globalInfoDao.getBtcPriceInfo(id)
+    }
+
+    override suspend fun clearBtcPriceInfo() {
+        globalInfoDao.clearBtcPriceInfo()
+    }
+
+    override suspend fun putPriceEntry(entry: PriceEntry) {
+        globalInfoDao.putPriceEntry(entry)
+    }
+
+    override suspend fun putPriceEntries(entries: List<PriceEntry>) {
+        globalInfoDao.putPriceEntries(entries)
+    }
+
+    override suspend fun getPriceChartEntries(id: String): List<PriceEntry> {
+        return globalInfoDao.getPriceChartEntries(id = id)
+    }
+
+    override suspend fun deletePriceChartEntries(coinId: String) {
+        globalInfoDao.deletePriceChartEntries(coinId = coinId)
+    }
+
+    override suspend fun clearAllCoinsPriceChartInfo() {
+        globalInfoDao.clearAllCoinsPriceChartInfo()
     }
 
     override suspend fun insertTrendCoin(coin: TrendCoin) {

@@ -6,4 +6,9 @@
     <string name="use_system_theme">Use System Theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
+
+    <string name="bitcoin">Bitcoin</string>
+    <string name="dominance">Dominance</string>
+    <string name="market_dominances">Market dominances</string>
+    <string name="trend_coins">Trend Coins</string>
 </resources>

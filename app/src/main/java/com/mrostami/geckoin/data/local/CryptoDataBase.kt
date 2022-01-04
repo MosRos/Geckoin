@@ -6,20 +6,25 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mrostami.geckoin.data.local.dao.GlobalInfoDao
-import com.mrostami.geckoin.model.Coin
-import com.mrostami.geckoin.model.GlobalMarketInfo
-import com.mrostami.geckoin.model.RankedCoin
-import com.mrostami.geckoin.model.TrendCoin
+import com.mrostami.geckoin.model.*
 
 @Database(
-    entities = [Coin::class, RankedCoin::class, GlobalMarketInfo::class, TrendCoin::class],
+    entities = [
+        Coin::class,
+        RankedCoin::class,
+        GlobalMarketInfo::class,
+        TrendCoin::class,
+        BitcoinPriceInfo::class,
+        EthereumPriceInfo::class,
+        PriceEntry::class
+    ],
     version = 1,
     exportSchema = false
 )
 @TypeConverters(RoomConverters::class)
 abstract class CryptoDataBase : RoomDatabase() {
 
-    abstract fun globalInfoDao() : GlobalInfoDao
+    abstract fun globalInfoDao(): GlobalInfoDao
 
     companion object {
         @Volatile

@@ -1,8 +1,7 @@
 package com.mrostami.geckoin.data.local.dao
 
 import androidx.room.*
-import com.mrostami.geckoin.model.GlobalMarketInfo
-import com.mrostami.geckoin.model.TrendCoin
+import com.mrostami.geckoin.model.*
 
 @Dao
 interface GlobalInfoDao {
@@ -15,6 +14,33 @@ interface GlobalInfoDao {
 
     @Query("DELETE FROM GlobalMarketInfo")
     suspend fun clearGlobalMarketInfo()
+
+    // Btc price info
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun putBtcPriceInfo(info: BitcoinPriceInfo)
+
+    @Query("SELECT * FROM BitcoinPriceInfo WHERE id = :id")
+    suspend fun getBtcPriceInfo(id: String) : BitcoinPriceInfo?
+
+    @Query("DELETE FROM BitcoinPriceInfo")
+    suspend fun clearBtcPriceInfo()
+
+    // Price Chart info
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun putPriceEntry(entry: PriceEntry)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun putPriceEntries(entries: List<PriceEntry>)
+
+    @Query("SELECT * FROM PriceEntry WHERE coinId = :id")
+    suspend fun getPriceChartEntries(id: String) : List<PriceEntry>
+
+    @Query("DELETE FROM PriceEntry WHERE coinId = :coinId")
+    suspend fun deletePriceChartEntries(coinId: String)
+
+    @Query("DELETE FROM PriceEntry")
+    suspend fun clearAllCoinsPriceChartInfo()
 
     // Trend Coins
     @Insert(onConflict = OnConflictStrategy.REPLACE)

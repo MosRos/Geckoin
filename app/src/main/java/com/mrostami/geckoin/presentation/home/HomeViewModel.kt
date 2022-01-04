@@ -3,10 +3,11 @@ package com.mrostami.geckoin.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mrostami.geckoin.domain.base.Result
+import com.mrostami.geckoin.domain.usecases.BitcoinChartInfoUseCase
+import com.mrostami.geckoin.domain.usecases.BitcoinSimplePriceUseCase
 import com.mrostami.geckoin.domain.usecases.GlobalMarketInfoUseCase
 import com.mrostami.geckoin.domain.usecases.TrendCoinsUseCase
-import com.mrostami.geckoin.model.GlobalMarketInfo
-import com.mrostami.geckoin.model.TrendCoin
+import com.mrostami.geckoin.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +18,26 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val globalMarketInfoUseCase: GlobalMarketInfoUseCase,
-    private val trendCoinsUseCase: TrendCoinsUseCase
+    private val trendCoinsUseCase: TrendCoinsUseCase,
+    private val bitcoinSimplePriceUseCase: BitcoinSimplePriceUseCase,
+    private val bitcoinChartInfoUseCase: BitcoinChartInfoUseCase
 ) : ViewModel() {
+
+    val bitcoinPriceInfoState: MutableStateFlow<Result<BitcoinPriceInfo>> = MutableStateFlow(Result.Empty)
+    fun getBitcoinPriceInfo(forceRefresh: Boolean = false) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = bitcoinSimplePriceUseCase.invoke(forceRefresh = forceRefresh)
+            bitcoinPriceInfoState.emitAll(result)
+        }
+    }
+
+    val bitcoinChartInfoState: MutableStateFlow<Result<List<PriceEntry>>> = MutableStateFlow(Result.Empty)
+    fun getBitcoinChartInfo(forceRefresh: Boolean = false) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = bitcoinChartInfoUseCase.invoke(forceRefresh = forceRefresh)
+            bitcoinChartInfoState.emitAll(result)
+        }
+    }
 
     val marketInfoState: MutableStateFlow<Result<GlobalMarketInfo>> = MutableStateFlow(Result.Empty)
     fun getGlobalInfo(forceRefresh: Boolean = false) {
