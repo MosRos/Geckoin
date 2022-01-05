@@ -25,7 +25,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:gravity">center</item>
     </style>
-    <style name="TextAppearance.PercentChance" parent="Widget.AppCompat.TextView">
+    <style name="TextAppearance.PercentChange" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_bold</item>
         <item name="android:textSize">14sp</item>
         <item name="android:background">@android:color/transparent</item>
@@ -42,7 +42,7 @@
         <item name="android:gravity">center</item>
     </style>
     <style name="TextAppearance.CoinNameSubtitle" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/firasans_light</item>
+        <item name="fontFamily">@font/firasans_regular</item>
         <item name="android:textSize">13sp</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/text_color_secondary</item>

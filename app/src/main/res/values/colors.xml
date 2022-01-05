@@ -29,6 +29,9 @@
     <color name="element_background_color">#FFFFFF</color>
     <color name="element_border_color">#FFFFFF</color>
 
+    <color name="up_green">#00796B</color>
+    <color name="down_red">#D32F2F</color>
+
     <color name="transparent">#00000000</color>
 
     <color name="purple_200">#FFBB86FC</color>
@@ -38,4 +41,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="test">#CD2962FF</color>
 </resources>

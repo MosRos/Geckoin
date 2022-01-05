@@ -89,7 +89,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtPricePercentChange"
-                style="@style/TextAppearance.PercentChance"
+                style="@style/TextAppearance.PercentChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
@@ -114,23 +114,24 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtBtc24hVol"
                 style="@style/TextAppearance.CoinNameSubtitle"
+                android:fontFamily="@font/firasans_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 app:layout_constraintStart_toStartOf="@id/txtBtcTitle"
                 app:layout_constraintTop_toBottomOf="@id/txtBtcTitle"
-                android:layout_marginTop="@dimen/margin_small"
                 tools:text="24h vol 343434343" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtBtc24hCap"
                 style="@style/TextAppearance.CoinNameSubtitle"
+                android:fontFamily="@font/firasans_regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/txtBtc24hVol"
-                app:layout_constraintEnd_toStartOf="@id/txtPricePercentChange"
+                app:layout_constraintTop_toBottomOf="@id/txtBtc24hVol"
+                app:layout_constraintStart_toStartOf="@id/txtBtc24hVol"
                 app:layout_constraintHorizontal_chainStyle="spread"
-                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="5dp"
                 android:singleLine="true"
                 tools:text="$ -79.6" />
 
@@ -138,11 +139,11 @@
                 android:id="@+id/bitcoinPriceChart"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/txtBtc24hVol"
+                app:layout_constraintTop_toBottomOf="@id/txtBtc24hCap"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 />
             <androidx.core.widget.ContentLoadingProgressBar
                 android:id="@+id/bitcoinProgressBar"
