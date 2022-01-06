@@ -36,7 +36,7 @@ interface CoinGeckoService {
     suspend fun getMarketChartInfo(
         @Path("id") coinId: String,
         @Query("vs_currency") vsCurrency: String = "usd",
-        @Query("days") days: Int = 1,
-        @Query("interval") interval: String = "hourly"
+        @Query("days") days: Int = 10,
+        @Query("interval") interval: String = "daily"
     ) : NetworkResponse<PriceChartResponse, CoinGeckoApiError>
 }

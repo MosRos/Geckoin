@@ -1,275 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/backgroundColor">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/startGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/margin_normal" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/backgroundColor">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/endGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/margin_normal" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/startGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_normal" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/topGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottomGuide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="20dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/endGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_normal" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bitcoinInfoCard"
-        style="@style/Widget.AS.CardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="@id/endGuide"
-        app:layout_constraintStart_toStartOf="@id/startGuide"
-        app:layout_constraintTop_toTopOf="@id/topGuide"
-        app:layout_constraintDimensionRatio="H,4:3"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgBitcoin"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="5dp"
-                android:scaleType="centerInside"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_margin="@dimen/margin_normal"
-                android:src="@drawable/bitcoin_logo" />
-            <TextView
-                android:id="@+id/txtBtcTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/imgBitcoin"
-                app:layout_constraintHorizontal_weight="2"
-                android:layout_margin="@dimen/margin_small"
-                style="@style/TextAppearance.CoinSymbol"
-                android:gravity="center|start"
-                android:text="@string/bitcoin"
-                />
-            <TextView
-                android:id="@+id/txtBtcPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/txtBtcTitle"
-                app:layout_constraintStart_toEndOf="@id/txtBtcTitle"
-                app:layout_constraintEnd_toStartOf="@id/txtPricePercentChange"
-                app:layout_constraintHorizontal_weight="2"
-                style="@style/TextAppearance.CoinPrice"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:gravity="center"
-                tools:text="50000"
-                />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="20dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/bottomGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="20dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtPricePercentChange"
-                style="@style/TextAppearance.PercentChange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                app:layout_constraintTop_toTopOf="@id/txtBtcTitle"
-                app:layout_constraintBottom_toBottomOf="@id/txtBtc24hCap"
-                app:layout_constraintEnd_toStartOf="@id/imgUpDown"
-                android:layout_marginEnd="@dimen/padding_normal"
-                tools:text="-2.23" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgUpDown"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:scaleType="centerInside"
-                app:layout_constraintTop_toTopOf="@id/txtBtcTitle"
-                app:layout_constraintBottom_toBottomOf="@id/txtBtc24hCap"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/margin_normal"
-                tools:src="@drawable/ic_arrow_drop_up" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtBtc24hVol"
-                style="@style/TextAppearance.CoinNameSubtitle"
-                android:fontFamily="@font/firasans_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                app:layout_constraintStart_toStartOf="@id/txtBtcTitle"
-                app:layout_constraintTop_toBottomOf="@id/txtBtcTitle"
-                tools:text="24h vol 343434343" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txtBtc24hCap"
-                style="@style/TextAppearance.CoinNameSubtitle"
-                android:fontFamily="@font/firasans_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/txtBtc24hVol"
-                app:layout_constraintStart_toStartOf="@id/txtBtc24hVol"
-                app:layout_constraintHorizontal_chainStyle="spread"
-                android:layout_marginTop="5dp"
-                android:singleLine="true"
-                tools:text="$ -79.6" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/bitcoinPriceChart"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/txtBtc24hCap"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="10dp"
-                />
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/bitcoinProgressBar"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bitcoinInfoCard"
+            style="@style/Widget.AS.CardView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintTop_toTopOf="@id/topGuide"
+            app:layout_constraintDimensionRatio="H,4:3"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgBitcoin"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="@dimen/margin_normal"
+                    android:src="@drawable/bitcoin_logo" />
+                <TextView
+                    android:id="@+id/txtBtcTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imgBitcoin"
+                    android:layout_margin="@dimen/margin_small"
+                    style="@style/TextAppearance.CoinSymbol"
+                    android:gravity="center|start"
+                    android:text="@string/bitcoin"
+                    />
+                <TextView
+                    android:id="@+id/txtBtcPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/txtBtcTitle"
+                    app:layout_constraintStart_toEndOf="@id/txtBtcTitle"
+                    app:layout_constraintEnd_toStartOf="@id/txtPricePercentChange"
+                    style="@style/TextAppearance.CoinPrice"
+                    android:textColor="@color/text_color_secondary"
+                    android:singleLine="true"
+                    android:maxLines="1"
+                    android:gravity="center"
+                    tools:text="50000"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtPricePercentChange"
+                    style="@style/TextAppearance.PercentChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    app:layout_constraintTop_toTopOf="@id/txtBtcTitle"
+                    app:layout_constraintBottom_toBottomOf="@id/txtBtc24hCap"
+                    app:layout_constraintEnd_toStartOf="@id/imgUpDown"
+                    tools:text="-2.23" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgUpDown"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:scaleType="centerInside"
+                    app:layout_constraintTop_toTopOf="@id/txtBtcTitle"
+                    app:layout_constraintBottom_toBottomOf="@id/txtBtc24hCap"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    tools:src="@drawable/ic_arrow_drop_up" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtBtc24hVol"
+                    style="@style/TextAppearance.CoinNameSubtitle"
+                    android:fontFamily="@font/firasans_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    app:layout_constraintStart_toStartOf="@id/txtBtcTitle"
+                    app:layout_constraintTop_toBottomOf="@id/txtBtcTitle"
+                    tools:text="24h vol 343434343" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtBtc24hCap"
+                    style="@style/TextAppearance.CoinNameSubtitle"
+                    android:fontFamily="@font/firasans_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/txtBtc24hVol"
+                    app:layout_constraintStart_toStartOf="@id/txtBtc24hVol"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    android:singleLine="true"
+                    tools:text="$ -79.6" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/bitcoinPriceChart"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/txtBtc24hCap"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="10dp"
+                    />
+                <androidx.core.widget.ContentLoadingProgressBar
+                    android:id="@+id/bitcoinProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/dominanceCard"
+            style="@style/Widget.AS.CardView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@id/bitcoinInfoCard"
+            app:layout_constraintDimensionRatio="H,4:3"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtMarketCapPercentages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:layout_gravity="top"
+                    style="@style/TextAppearance.CoinSymbol"
+                    android:gravity="center|start"
+                    android:text="@string/market_dominances"
+                    />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/dominancePieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    />
+
+            </LinearLayout>
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/dominanceProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
                 android:indeterminate="true"
                 android:visibility="gone"
                 tools:visibility="visible"
                 />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/dominanceCard"
-        style="@style/Widget.AS.CardView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="@id/endGuide"
-        app:layout_constraintStart_toStartOf="@id/startGuide"
-        app:layout_constraintTop_toBottomOf="@id/bitcoinInfoCard"
-        app:layout_constraintDimensionRatio="H,4:3"
-        android:layout_marginTop="@dimen/margin_medium"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtMarketCapPercentages"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_gravity="top"
-                style="@style/TextAppearance.CoinSymbol"
-                android:gravity="center|start"
-                android:text="@string/market_dominances"
-                />
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/dominancePieChart"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/trendCoinsCard"
+            style="@style/Widget.AS.CardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            app:layout_constraintEnd_toEndOf="@id/endGuide"
+            app:layout_constraintStart_toStartOf="@id/startGuide"
+            app:layout_constraintTop_toBottomOf="@id/dominanceCard"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_normal"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                />
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txtTrendCoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginHorizontal="@dimen/margin_normal"
+                    android:layout_gravity="top"
+                    style="@style/TextAppearance.CoinSymbol"
+                    android:gravity="center|start"
+                    android:text="@string/trend_coins"
+                    />
 
-        </LinearLayout>
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/dominanceProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:visibility="gone"
-            tools:visibility="visible"
-            />
-    </com.google.android.material.card.MaterialCardView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/trendCoinsRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:orientation="vertical"
+                    />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/trendCoinsCard"
-        style="@style/Widget.AS.CardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        app:layout_constraintEnd_toEndOf="@id/endGuide"
-        app:layout_constraintStart_toStartOf="@id/startGuide"
-        app:layout_constraintTop_toBottomOf="@id/dominanceCard"
-        android:layout_marginTop="@dimen/margin_medium"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtTrendCoins"
+            </LinearLayout>
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/trendCoinsProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal"
-                android:layout_marginHorizontal="@dimen/margin_normal"
-                android:layout_gravity="top"
-                style="@style/TextAppearance.CoinSymbol"
-                android:gravity="center|start"
-                android:text="@string/trend_coins"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:visibility="gone"
+                tools:visibility="visible"
                 />
+        </com.google.android.material.card.MaterialCardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/trendCoinsRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                />
-
-        </LinearLayout>
-        <androidx.core.widget.ContentLoadingProgressBar
-            android:id="@+id/trendCoinsProgressBar"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_gravity="center"
             android:indeterminate="true"
             android:visibility="gone"
-            tools:visibility="visible"
-            />
-    </com.google.android.material.card.MaterialCardView>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

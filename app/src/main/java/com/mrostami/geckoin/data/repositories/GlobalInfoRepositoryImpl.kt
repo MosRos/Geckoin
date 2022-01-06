@@ -100,6 +100,7 @@ class GlobalInfoRepositoryImpl @Inject constructor(
                 val coins: List<TrendCoin>? = apiData.coinItems?.mapNotNull { it.item }
                 if (!coins.isNullOrEmpty()) {
                     withContext(Dispatchers.IO) {
+                        localDataSource.clearAllTrendCoins()
                         localDataSource.insertTrendCoins(coins)
                     }
                 }
@@ -185,6 +186,7 @@ class GlobalInfoRepositoryImpl @Inject constructor(
 
                 override suspend fun persistData(apiData: PriceChartResponse) {
                     withContext(Dispatchers.IO) {
+                        localDataSource.deletePriceChartEntries(bitcoinId)
                         val mapedData: List<PriceEntry> =
                             apiData.prices?.filterNotNull()?.map { it ->
                                 PriceEntry(

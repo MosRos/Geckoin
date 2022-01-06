@@ -3,5 +3,5 @@
     <font
             app:font="@font/firasans_regular_font"
             app:fontStyle="normal"
-            app:fontWeight="400" />
+            app:fontWeight="500" />
 </font-family>
