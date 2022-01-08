@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Geckoin</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_market">Market</string>
+    <string name="use_system_theme">Use System Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+
+    <string name="bitcoin">Bitcoin</string>
+    <string name="dominance">Dominance</string>
+    <string name="market_dominances">Market dominances</string>
+    <string name="trend_coins">Trend Coins</string>
+    <string name="btc_24_h_price_chart">24h price chart</string>
 </resources>
