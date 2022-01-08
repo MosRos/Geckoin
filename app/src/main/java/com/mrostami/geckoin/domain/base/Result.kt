@@ -28,8 +28,7 @@ sealed class Result<out R> {
 
     data class Success<out T>(val data: T) : Result<T>()
     data class Error(val exception: Exception,
-                     val errors: List<String>? = null,
-                     val errorType: ErrorType = ErrorType.EXCEPTION
+                     val message: String? = null,
     ) : Result<Nothing>()
     object Loading : Result<Nothing>()
     object Empty : Result<Nothing>()
@@ -64,12 +63,4 @@ inline fun <reified T> Result<T>.updateOnSuccess(liveData: MutableLiveData<T>) {
     if (this is Result.Success) {
         liveData.value = data
     }
-}
-
-enum class ErrorType(val message: String) {
-    EXCEPTION("oops! an error occured!"),
-    UNAUTHORIZED("You are not signed in"),
-    SERVER_ERROR("Server error ..."),
-    SERVER_NOT_RESPOND("Server not responding ..."),
-    UNKNOWN_ERROR("oops! an error occured!")
 }

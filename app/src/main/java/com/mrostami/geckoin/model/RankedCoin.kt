@@ -8,10 +8,10 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-@Entity(tableName = "RankedCoin")
+@Entity
 data class RankedCoin(
     @SerializedName("id")
-    @PrimaryKey @ColumnInfo(name = "id") var id: String,
+    @PrimaryKey @ColumnInfo(name = "id") var id: String = "0xxx" ,
     @SerializedName("ath")
     var ath: Double? = null, // 1448.18
     @SerializedName("ath_change_percentage")
@@ -60,8 +60,4 @@ data class RankedCoin(
     var totalSupply: Double? = null, // null
     @SerializedName("total_volume")
     var totalVolume: Long? = null, // 14969737842
-
-    /*** Non Api(locale) Variables ***/
-    @Expose(serialize = false, deserialize = false)
-    @ColumnInfo(index = true, name = "accountBook_id") var accountBookId: String
 )

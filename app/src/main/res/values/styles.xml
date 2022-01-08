@@ -3,7 +3,7 @@
         <item name="cardCornerRadius">@dimen/card_radius</item>
         <item name="cardElevation">0dp</item>
         <item name="strokeWidth">@dimen/card_Stroke_width</item>
-        <item name="strokeColor">@color/element_background_color</item>
+        <item name="strokeColor">@color/element_border_color</item>
         <item name="cardBackgroundColor">?attr/colorSurface</item>
     </style>
     <style name="Widget.AS.Toolbar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
@@ -20,36 +20,44 @@
     <style name="TextAppearance.CoinPrice" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_medium</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/text_color_primary</item>
         <item name="android:textStyle">normal</item>
         <item name="android:gravity">center</item>
     </style>
-    <style name="TextAppearance.PercentChance" parent="Widget.AppCompat.TextView">
+    <style name="TextAppearance.PercentChange" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_bold</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/text_color_primary</item>
         <item name="android:textStyle">normal</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="TextAppearance.CoinSymbol" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/firasans_bold</item>
+        <item name="fontFamily">@font/firasans_medium</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/text_color_primary</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="TextAppearance.CoinNameSubtitle" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/firasans_light</item>
+        <item name="fontFamily">@font/firasans_regular</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/text_color_secondary</item>
         <item name="android:textStyle">normal</item>
         <item name="android:gravity">center</item>
     </style>
 
+    <style name="TextAppearance.TrendCoinSymbol" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/firasans_medium</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="TextAppearance.TrendCoinRank" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/firasans_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color_secondary</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="Widget.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
         <item name="android:background">@color/color_surface</item>
         <item name="backgroundColor">@color/color_surface</item>
@@ -61,7 +69,7 @@
     </style>
 
     <style name="TextAppearance.BottomNavSelected" parent="Widget.AppCompat.TextView">
-        <item name="fontFamily">@font/firasans_medium</item>
+        <item name="fontFamily">@font/firasans_regular</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textStyle">bold</item>

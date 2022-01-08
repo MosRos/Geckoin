@@ -3,8 +3,10 @@
 
     <color name="blue">#5453D6</color>
     <color name="prm_one">#7658DD</color>
+    <color name="nobatyar_color">#878AFF</color>
+    <color name="matte_purple">#8C7AE6</color>
 
-    <color name="color_primary">#7987F3</color> <!-- #4848B8 -->
+    <color name="color_primary">#8C7AE6</color> <!-- #7987F3 --> <!-- #4848B8 -->
     <color name="color_primary_variant">#878AFF</color>
     <color name="color_on_primary">#FFFFFF</color>
 
@@ -12,19 +14,23 @@
     <color name="color_secondary_variant">#8B95EA</color>
     <color name="color_on_secondary">#000000</color>
 
-    <color name="color_background">#EDEDF8</color>
+    <color name="color_background">#EFEFFB</color>
     <color name="color_on_background">#000000</color>
-    <color name="color_surface">#EBEBF7</color>
+    <color name="color_surface">#F4F4FA</color>
     <color name="color_on_surface">#252525</color>
     <color name="color_error">#B00020</color>
     <color name="color_on_error">#FFFFFF</color>
 
-    <color name="text_color_primary">#171717</color>
-    <color name="text_color_secondary">#282828</color>
+    <color name="text_color_primary">#1E1E1E</color>
+    <color name="text_color_secondary">#363636</color>
 
     <color name="icon_color">#9593AA</color>
     <color name="divider_color">#E2E1EA</color>
-    <color name="element_background_color">#E9E1F4</color>
+    <color name="element_background_color">#F1F1FB</color>
+    <color name="element_border_color">#FFFFFF</color>
+
+    <color name="up_green">#00796B</color>
+    <color name="down_red">#D32F2F</color>
 
     <color name="transparent">#00000000</color>
 
@@ -35,4 +41,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="test">#2E3F51</color>
 </resources>

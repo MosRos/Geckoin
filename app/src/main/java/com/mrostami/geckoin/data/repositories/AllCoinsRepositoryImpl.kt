@@ -1,4 +1,4 @@
-package com.mrostami.geckoin.data
+package com.mrostami.geckoin.data.repositories
 
 import com.mrostami.geckoin.domain.AllCoinsRepository
 
