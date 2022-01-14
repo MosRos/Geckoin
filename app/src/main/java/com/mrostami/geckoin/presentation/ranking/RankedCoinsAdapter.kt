@@ -77,8 +77,11 @@ class RankedCoinsAdapter(
                     transformations(CircleCropTransformation())
                 }
 
+                with(txtCoinSymbol) {
+                    text = coin.symbol
+                    isAllCaps = true
+                }
                 txtCoinName.text = coin.name
-                txtCoinSymbol.text = coin.symbol
                 txtRank.text = coin.marketCapRank?.toString()
                 txtPrice.text = coin.currentPrice?.let {
                     getReadablePrice(it)

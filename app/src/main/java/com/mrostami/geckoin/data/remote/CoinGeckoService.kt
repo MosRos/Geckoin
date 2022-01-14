@@ -43,7 +43,7 @@ interface CoinGeckoService {
 
     @GET("coins/markets")
     suspend fun getPagedMarketRanks(
-        @Query("vs_currency") vs_currency: String,
+        @Query("vs_currency") vs_currency: String = "usd",
         @Query("page") page: Int,
         @Query("per_page") per_page: Int
     ) : List<RankedCoin>

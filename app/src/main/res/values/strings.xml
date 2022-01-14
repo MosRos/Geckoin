@@ -12,4 +12,5 @@
     <string name="market_dominances">Market dominances</string>
     <string name="trend_coins">Trend Coins</string>
     <string name="btc_24_h_price_chart">24h price chart</string>
+    <string name="retry">Retry</string>
 </resources>

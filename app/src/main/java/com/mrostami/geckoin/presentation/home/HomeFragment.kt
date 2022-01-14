@@ -26,7 +26,6 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.google.android.material.snackbar.Snackbar
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.HomeFragmentBinding
 import com.mrostami.geckoin.domain.base.Result
@@ -299,6 +298,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
 
             }
+            data = LineData(
+                listOf(
+                    LineDataSet(listOf(Entry(0f, 0f)), "")
+                )
+            )
         }
     }
 
@@ -386,6 +390,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             description?.apply {
                 isEnabled = false
             }
+            data = PieData(
+                    PieDataSet(listOf(PieEntry(0f, 0f)), "")
+            )
         }
     }
 

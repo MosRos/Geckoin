@@ -35,6 +35,7 @@ class MarketRanksMediator @Inject constructor(
 
     override suspend fun initialize(): InitializeAction = InitializeAction.LAUNCH_INITIAL_REFRESH
 
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, RankedCoin>
@@ -65,17 +66,14 @@ class MarketRanksMediator @Inject constructor(
 
         try {
             if (!NetworkUtils.isConnected()) {
-                Timber.e("No Network Connection!")
-                return MediatorResult.Success(true)
+                return MediatorResult.Error(Error("No internet connection!"))
             }
             val rankedCoins = remoteDataSource.getPagedMarketRanks(
-                "usd",
-                page,
-                state.config.pageSize
+                vs_currency = "usd",
+                page = page,
+                per_page = state.config.pageSize
             )
-            Timber.e("result size is: ${rankedCoins.size}")
             val endOfPaginationReached = rankedCoins.isNullOrEmpty()
-            Timber.e("PagingMediator End-Of-Pagination = $endOfPaginationReached")
 
             if (loadType == LoadType.REFRESH && !rankedCoins.isNullOrEmpty()) {
                 localDataSource.clearCoinsRemoteKeys()

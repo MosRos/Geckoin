@@ -27,4 +27,13 @@
         app:layout_constraintTop_toTopOf="parent"
         android:visibility="invisible"
         />
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/pagingProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Widget.MaterialComponents.LinearProgressIndicator"
+        android:indeterminate="true"
+        android:visibility="visible"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

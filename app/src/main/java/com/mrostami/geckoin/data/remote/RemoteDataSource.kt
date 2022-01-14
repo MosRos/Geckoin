@@ -56,7 +56,6 @@ class RemoteDataSource @Inject constructor(
         page: Int,
         per_page: Int
     ): List<RankedCoin> = coinGeckoApiService.getPagedMarketRanks(
-        vs_currency = vs_currency,
         page = page,
         per_page = per_page
     )

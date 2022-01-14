@@ -18,19 +18,24 @@ import javax.inject.Inject
 
 class MarketRanksRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val marketRanksMediator: MarketRanksMediator) : MarketRanksRepository {
+    private val marketRanksMediator: MarketRanksMediator
+) : MarketRanksRepository {
 
     @ExperimentalPagingApi
     override fun getRanks(): Flow<PagingData<RankedCoin>> {
 
         val pagingSourceFactory = { localDataSource.getPagedRankedCoins() }
-        return Pager<Int, RankedCoin>(
-                config = PagingConfig(pageSize = PAGE_SIZE, prefetchDistance = 5, enablePlaceholders = true, initialLoadSize = 100, maxSize = 200),
-                remoteMediator = marketRanksMediator,
-                initialKey = 1,
-                pagingSourceFactory = pagingSourceFactory
-            ).flow
-
-        }
-
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE,
+                prefetchDistance = 1,
+                enablePlaceholders = false,
+                initialLoadSize = 50,
+                maxSize = 200
+            ),
+            initialKey = 1,
+            remoteMediator = marketRanksMediator,
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+    }
 }
