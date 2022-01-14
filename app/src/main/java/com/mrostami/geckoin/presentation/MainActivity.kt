@@ -1,5 +1,6 @@
 package com.mrostami.geckoin.presentation
 
+import android.app.Application
 import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Build
@@ -17,9 +18,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.MainActivityBinding
 import com.mrostami.geckoin.presentation.utils.AppBarUtils
+import com.mrostami.geckoin.presentation.workers.SyncCoinsWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -51,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         navController?.setGraph(R.navigation.main_navigation)
         navController?.let { initBottomNavAndController(it) }
 
+//        initSyncWorker()
         registerWidgets()
         setObservers()
         setListeners()
@@ -67,6 +74,18 @@ class MainActivity : AppCompatActivity() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
+    }
+
+    private fun initSyncWorker() {
+        val syncWorkConstraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiredNetworkType(NetworkType.NOT_ROAMING)
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val syncRequest = OneTimeWorkRequestBuilder<SyncCoinsWorker>()
+            .setConstraints(syncWorkConstraints)
+            .build()
+        WorkManager.getInstance(this).enqueue(syncRequest)
     }
 
     private fun initBottomNavAndController(navController: NavController) {

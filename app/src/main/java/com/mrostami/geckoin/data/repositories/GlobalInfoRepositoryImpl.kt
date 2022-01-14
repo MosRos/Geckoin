@@ -87,7 +87,6 @@ class GlobalInfoRepositoryImpl @Inject constructor(
 
             override fun shouldFetchFromApi(): Boolean {
                 val trigger: Long = System.currentTimeMillis() - trendCoinsLRT
-                Timber.e("Triggered  Time is: $trigger  /n and LastRequestTime: $trendCoinsLRT")
                 return forceRefresh || trigger > rateLimiter
             }
 
@@ -131,7 +130,6 @@ class GlobalInfoRepositoryImpl @Inject constructor(
 
                 override fun shouldFetchFromApi(): Boolean {
                     val trigger: Long = System.currentTimeMillis() - btcPriceLRT
-                    Timber.e("Triggered  Time is: $trigger  /n and LastRequestTime: $btcPriceLRT")
                     return forceRefresh || trigger > rateLimiter
                 }
 
@@ -175,7 +173,6 @@ class GlobalInfoRepositoryImpl @Inject constructor(
 
                 override fun shouldFetchFromApi(): Boolean {
                     val trigger: Long = System.currentTimeMillis() - marketChartLRT
-                    Timber.e("Triggered  Time is: $trigger  /n and LastRequestTime: $marketChartLRT")
                     return forceRefresh || trigger > rateLimiter
                 }
 
