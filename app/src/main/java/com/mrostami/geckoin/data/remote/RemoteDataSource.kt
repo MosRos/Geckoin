@@ -5,6 +5,7 @@ import com.mrostami.geckoin.data.remote.responses.CoinGeckoApiError
 import com.mrostami.geckoin.data.remote.responses.CoinGeckoPingResponse
 import com.mrostami.geckoin.data.remote.responses.PriceChartResponse
 import com.mrostami.geckoin.data.remote.responses.TrendCoinsResponse
+import com.mrostami.geckoin.model.RankedCoin
 import com.mrostami.geckoin.model.SimplePriceInfoResponse
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
@@ -49,4 +50,14 @@ class RemoteDataSource @Inject constructor(
     ): NetworkResponse<PriceChartResponse, CoinGeckoApiError> {
         return coinGeckoApiService.getMarketChartInfo(coinId = coinId)
     }
+
+    override suspend fun getPagedMarketRanks(
+        vs_currency: String,
+        page: Int,
+        per_page: Int
+    ): List<RankedCoin> = coinGeckoApiService.getPagedMarketRanks(
+        page = page,
+        per_page = per_page
+    )
+
 }

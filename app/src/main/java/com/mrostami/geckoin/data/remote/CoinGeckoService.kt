@@ -5,6 +5,7 @@ import com.mrostami.geckoin.data.remote.responses.CoinGeckoApiError
 import com.mrostami.geckoin.data.remote.responses.CoinGeckoPingResponse
 import com.mrostami.geckoin.data.remote.responses.PriceChartResponse
 import com.mrostami.geckoin.data.remote.responses.TrendCoinsResponse
+import com.mrostami.geckoin.model.RankedCoin
 import com.mrostami.geckoin.model.SimplePriceInfoResponse
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -39,4 +40,11 @@ interface CoinGeckoService {
         @Query("days") days: Int = 10,
         @Query("interval") interval: String = "daily"
     ) : NetworkResponse<PriceChartResponse, CoinGeckoApiError>
+
+    @GET("coins/markets")
+    suspend fun getPagedMarketRanks(
+        @Query("vs_currency") vs_currency: String = "usd",
+        @Query("page") page: Int,
+        @Query("per_page") per_page: Int
+    ) : List<RankedCoin>
 }
