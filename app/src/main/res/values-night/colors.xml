@@ -29,6 +29,9 @@
     <color name="element_background_color">#253443</color>
     <color name="element_border_color">#2E3F51</color>
 
+    <color name="up_green">#058C41</color>
+    <color name="down_red">#D33030</color>
+
     <color name="transparent">#00000000</color>
 
     <color name="purple_200">#FFBB86FC</color>

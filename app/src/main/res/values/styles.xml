@@ -48,8 +48,9 @@
 
     <style name="TextAppearance.TrendCoinSymbol" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_medium</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
     </style>
     <style name="TextAppearance.TrendCoinRank" parent="Widget.AppCompat.TextView">

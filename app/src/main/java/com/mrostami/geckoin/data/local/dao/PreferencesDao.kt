@@ -8,4 +8,6 @@ interface PreferencesDao {
     fun setAuthToken(token: String)
     fun getAuthToken() : String?
 
+    fun setLastSyncDate(time: Long)
+    fun getLastSyncDate() : Long
 }

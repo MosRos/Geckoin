@@ -19,7 +19,7 @@
 
     <fragment
             android:id="@+id/navigation_market"
-            android:name="com.mrostami.geckoin.presentation.market.MarketRanksFragment"
+            android:name="com.mrostami.geckoin.presentation.ranking.MarketRanksFragment"
             android:label="@string/title_market"
             tools:layout="@layout/market_rank_fragment" />
 

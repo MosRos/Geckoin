@@ -16,6 +16,7 @@ class PreferencesHelper @Inject constructor(
     private val themeModePair = Pair("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     private val authTokenPair = Pair<String, String?>("auth_token", null)
     private val globalMarketPair = Pair<String, String?>("global_market_info", null)
+    private val lastSyncDate = Pair<String, Long>("last_sync_date", 0)
 
 
     var selectedThemeMode: Int
@@ -47,4 +48,10 @@ class PreferencesHelper @Inject constructor(
             null
         }
     }
+
+    var lastDbSyncDate: Long
+        get() = preferences.getLong(lastSyncDate.first, lastSyncDate.second)
+        set(value) = preferences.edit {
+            putLong(lastSyncDate.first, value)
+        }
 }

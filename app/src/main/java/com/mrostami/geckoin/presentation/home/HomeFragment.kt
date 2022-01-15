@@ -26,7 +26,6 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
-import com.google.android.material.snackbar.Snackbar
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.HomeFragmentBinding
 import com.mrostami.geckoin.domain.base.Result
@@ -87,7 +86,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Success -> {
 //                        binding.progressBar.isVisible = false
                         updateBitcoinPriceInfo(result.data)
-                        Timber.e("Bitcoin Price Info Result is: ${result.data}")
                     }
                     is Result.Error -> {
 //                        binding.progressBar.isVisible = false
@@ -114,7 +112,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Success -> {
                         binding.bitcoinProgressBar.isVisible = false
                         updateBtcPriceChart(result.data)
-                        Timber.e("Success Bitcoin Chart Result is: ${result.data}")
                     }
                     is Result.Error -> {
                         binding.bitcoinProgressBar.isVisible = false
@@ -141,7 +138,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Success -> {
                         binding.dominanceProgressBar.isVisible = false
                         updateDominanceChart(result.data)
-                        Timber.e("Success globalInfo Result is: ${result.data}")
                     }
                     is Result.Error -> {
                         binding.dominanceProgressBar.isVisible = false
@@ -167,14 +163,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     }
                     is Result.Success -> {
                         binding.trendCoinsProgressBar.isVisible = false
-                        Timber.e("TrendCoins Result is: ${result.data}")
-                        activity?.showSnack(
-                            message = "error",
-                            length = Snackbar.LENGTH_LONG,
-                            action = {
-                                context?.showToast("Hiiiiiiii")
-                            }
-                        )
                         updateTrendAdapter(result.data)
                     }
                     is Result.Error -> {
@@ -210,8 +198,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         val verticalBottomDecoration = DividerItemDecoration(
             trendCoinsRecycler?.context,
             llManager.orientation
-        ).apply {
-        }
+        )
         dividerDrawable?.let {
             verticalBottomDecoration.setDrawable(it)
         }
@@ -311,6 +298,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 setPosition(YAxis.YAxisLabelPosition.INSIDE_CHART)
 
             }
+            data = LineData(
+                listOf(
+                    LineDataSet(listOf(Entry(0f, 0f)), "")
+                )
+            )
         }
     }
 
@@ -398,6 +390,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             description?.apply {
                 isEnabled = false
             }
+            data = PieData(
+                    PieDataSet(listOf(PieEntry(0f, 0f)), "")
+            )
         }
     }
 

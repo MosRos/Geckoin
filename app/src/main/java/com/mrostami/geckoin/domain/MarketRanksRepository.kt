@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 interface MarketRanksRepository {
-    fun getRanks() : Flow<Result<PagingData<RankedCoin>>> = flow {  }
+    fun getRanks() : Flow<PagingData<RankedCoin>> = flow {  }
 }

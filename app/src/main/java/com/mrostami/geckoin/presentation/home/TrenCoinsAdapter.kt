@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
+import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.ListItemTrendCoinBinding
 import com.mrostami.geckoin.model.TrendCoin
 
@@ -63,7 +66,14 @@ class TrenCoinsAdapter(
 
         fun bind(coin: TrendCoin) {
             with(binding) {
-                imgCoinLogo.load(coin.small)
+                imgCoinLogo.load(coin.small){
+                    networkCachePolicy(CachePolicy.ENABLED)
+                    diskCachePolicy(CachePolicy.ENABLED)
+                    networkCachePolicy(CachePolicy.ENABLED)
+                    crossfade(true)
+                    placeholder(R.drawable.placeholder_character)
+                    transformations(CircleCropTransformation())
+                }
                 txtCoinSymbol.text = coin.symbol
                 txtCoinName.text = coin.name
 //                txtCoinPrice.text = coin.priceBtc?.toString() + "(btc)"
