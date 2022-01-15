@@ -17,8 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$Behavior"
-        app:elevation="1dp"
-        android:elevation="1dp"
+        app:elevation="5dp"
         app:liftOnScroll="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,6 +54,11 @@
             android:indeterminate="true"
             android:visibility="visible"
             />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/colorSurface"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
