@@ -5,6 +5,7 @@ import com.mrostami.geckoin.data.remote.responses.CoinGeckoApiError
 import com.mrostami.geckoin.data.remote.responses.CoinGeckoPingResponse
 import com.mrostami.geckoin.data.remote.responses.PriceChartResponse
 import com.mrostami.geckoin.data.remote.responses.TrendCoinsResponse
+import com.mrostami.geckoin.model.Coin
 import com.mrostami.geckoin.model.RankedCoin
 import com.mrostami.geckoin.model.SimplePriceInfoResponse
 import okhttp3.ResponseBody
@@ -60,4 +61,6 @@ class RemoteDataSource @Inject constructor(
         per_page = per_page
     )
 
+    override suspend fun getAllCoins(): NetworkResponse<List<Coin>, CoinGeckoApiError> =
+        coinGeckoApiService.getAllCoins()
 }

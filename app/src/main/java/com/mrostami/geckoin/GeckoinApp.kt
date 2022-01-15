@@ -2,13 +2,17 @@ package com.mrostami.geckoin
 
 import android.app.Application
 import android.util.Log
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.*
+import com.mrostami.geckoin.presentation.workers.SyncCoinsWorker
 import dagger.hilt.android.HiltAndroidApp
 import org.jetbrains.annotations.NonNls
 import timber.log.Timber
+import javax.inject.Inject
 
 
 @HiltAndroidApp
-class GeckoinApp : Application() {
+class GeckoinApp : Application(), Configuration.Provider {
 
     companion object {
         private lateinit var instance: GeckoinApp
@@ -19,15 +23,45 @@ class GeckoinApp : Application() {
         }
     }
 
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override fun getWorkManagerConfiguration(): Configuration {
+        return if (BuildConfig.DEBUG) {
+            Configuration.Builder()
+                .setWorkerFactory(workerFactory)
+                .setMinimumLoggingLevel(Log.DEBUG)
+                .build()
+        } else {
+            Configuration.Builder()
+                .setMinimumLoggingLevel(Log.ERROR)
+                .setWorkerFactory(workerFactory)
+                .build()
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
 
         initTimber()
+        initSyncWorker(this)
     }
 
     fun getAppContext() : Application {
         return instance
+    }
+
+    private fun initSyncWorker(context: Application) {
+        val syncWorkConstraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiredNetworkType(NetworkType.NOT_ROAMING)
+            .setRequiresBatteryNotLow(true)
+            .build()
+        val syncRequest = OneTimeWorkRequestBuilder<SyncCoinsWorker>()
+            .setConstraints(syncWorkConstraints)
+            .build()
+        WorkManager.getInstance(context).enqueue(syncRequest)
     }
 
     private fun initTimber() {

@@ -2,9 +2,11 @@ package com.mrostami.geckoin.di
 
 import com.mrostami.geckoin.data.local.LocalDataSource
 import com.mrostami.geckoin.data.remote.RemoteDataSource
+import com.mrostami.geckoin.data.repositories.AllCoinsRepositoryImpl
 import com.mrostami.geckoin.data.repositories.GlobalInfoRepositoryImpl
 import com.mrostami.geckoin.data.repositories.MarketRanksMediator
 import com.mrostami.geckoin.data.repositories.MarketRanksRepositoryImpl
+import com.mrostami.geckoin.domain.AllCoinsRepository
 import com.mrostami.geckoin.domain.GlobalInfoRepository
 import com.mrostami.geckoin.domain.MarketRanksRepository
 import dagger.Module
@@ -40,5 +42,17 @@ object RepositoryModule {
                 localDataSource = localDataSource,
                 marketRanksMediator = marketRanksMediator
             )
+    }
+
+    @Singleton
+    @Provides
+    fun provideAllCoinsRepository(
+        localDataSource: LocalDataSource,
+        remoteDataSource: RemoteDataSource
+    ) : AllCoinsRepository {
+        return AllCoinsRepositoryImpl(
+            localDataSource = localDataSource,
+            remoteDataSource = remoteDataSource
+        )
     }
 }
