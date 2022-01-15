@@ -23,4 +23,11 @@
             android:label="@string/title_market"
             tools:layout="@layout/market_rank_fragment" />
 
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.mrostami.geckoin.presentation.settings.SettingsFragment"
+        android:label="@string/more"
+        tools:layout="@layout/settings_fragment"
+        />
+
 </navigation>

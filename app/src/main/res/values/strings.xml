@@ -14,4 +14,5 @@
     <string name="btc_24_h_price_chart">24h price chart</string>
     <string name="retry">Retry</string>
     <string name="search">Search</string>
+    <string name="more">More</string>
 </resources>
