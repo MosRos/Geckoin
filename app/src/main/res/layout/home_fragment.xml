@@ -185,7 +185,7 @@
                     android:layout_gravity="top"
                     style="@style/TextAppearance.CoinSymbol"
                     android:gravity="center|start"
-                    android:text="@string/market_dominances"
+                    android:text="@string/market_dominance"
                     />
 
                 <com.github.mikephil.charting.charts.PieChart

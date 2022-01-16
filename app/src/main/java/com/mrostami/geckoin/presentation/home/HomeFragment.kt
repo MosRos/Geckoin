@@ -444,7 +444,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             }
         }
 
-        val dataSet = PieDataSet(chartValues, getString(R.string.market_dominances)).apply {
+        val dataSet = PieDataSet(chartValues, getString(R.string.market_dominance)).apply {
             sliceSpace = 3f
             selectionShift = 5f
             colors = graphPallet

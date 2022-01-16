@@ -1,19 +1,15 @@
 package com.mrostami.geckoin.presentation
 
-import android.app.Application
-import android.content.DialogInterface
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,13 +18,13 @@ import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.mrostami.geckoin.GeckoinApp
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.MainActivityBinding
 import com.mrostami.geckoin.presentation.utils.AppBarUtils
-import com.mrostami.geckoin.presentation.workers.SyncCoinsWorker
+import com.mrostami.geckoin.workers.SyncCoinsWorker
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -36,16 +32,13 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels<MainViewModel>()
     private lateinit var viewBinding: MainActivityBinding
-    private var themeDialogBuilder: AlertDialog.Builder? = null
-    private var themeDialog: AlertDialog? = null
-    private var selectedTheme: Int = AppCompatDelegate.MODE_NIGHT_YES
+    private var selectedTheme: Int = GeckoinApp.getInstance().getThemeMode()
+
+    // TODO: find better solution for managing theme
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        selectedTheme = mainViewModel.selectedThemeMode
         AppCompatDelegate.setDefaultNightMode(selectedTheme)
-
+        super.onCreate(savedInstanceState)
         viewBinding = MainActivityBinding.inflate(layoutInflater)
         val view: View = viewBinding.root
         setContentView(view)
@@ -57,10 +50,9 @@ class MainActivity : AppCompatActivity() {
         navController?.setGraph(R.navigation.main_navigation)
         navController?.let { initBottomNavAndController(it) }
 
-//        initSyncWorker()
+        initSyncWorker()
         registerWidgets()
         setObservers()
-        setListeners()
     }
 
     override fun onStart() {
@@ -70,11 +62,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
     }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-    }
+//
+//    override fun onConfigurationChanged(newConfig: Configuration) {
+//        super.onConfigurationChanged(newConfig)
+//    }
 
     private fun initSyncWorker() {
         val syncWorkConstraints = Constraints.Builder()
@@ -102,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun registerWidgets() {
-        when (selectedTheme) {
+        when (mainViewModel.selectedThemeMode) {
             AppCompatDelegate.MODE_NIGHT_NO -> setThemeIcon(R.drawable.ic_sun)
 
             AppCompatDelegate.MODE_NIGHT_YES -> setThemeIcon(R.drawable.ic_moon)
@@ -113,65 +104,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setObservers() {
-        mainViewModel.themeMode.observe(this, Observer { mode ->
-            when (mode) {
-                AppCompatDelegate.MODE_NIGHT_NO -> setThemeIcon(R.drawable.ic_sun)
-
-                AppCompatDelegate.MODE_NIGHT_YES -> setThemeIcon(R.drawable.ic_moon)
-
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> setThemeIcon(R.drawable.ic_brightness_auto)
-
-                else -> setThemeIcon(R.drawable.ic_brightness_auto)
-            }
-        })
-    }
-
     private fun setThemeIcon(@DrawableRes iconId: Int) {
         viewBinding.themeSelectIcon.setImageDrawable(ContextCompat.getDrawable(this, iconId))
     }
 
-    private fun setListeners() {
-        viewBinding.themeSelectIcon.setOnClickListener {
-            if (selectedTheme < 0 || selectedTheme > 3) {
-                selectedTheme = 3
+    private fun setObservers() {
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.appThemeChanged.collect { changed ->
+                selectedTheme = mainViewModel.selectedThemeMode
+                if (changed) {
+                    applyTheme()
+                }
             }
-            showThemeDialog()
-        }
-    }
-
-    private fun initThemeSelectDialog() {
-        themeDialogBuilder = AlertDialog.Builder(this)
-            .setTitle("Please Select Theme")
-            .setCancelable(true)
-            .setSingleChoiceItems(
-                arrayOf("Light", "Dark", "Auto"),
-                selectedTheme - 1
-            ) { dialogInterface: DialogInterface?, i: Int ->
-                changeTheme(i)
-            }
-
-        themeDialog = themeDialogBuilder?.create()
-    }
-
-    private fun showThemeDialog() {
-        if (themeDialog == null) {
-            initThemeSelectDialog()
-        }
-        themeDialog?.show()
-    }
-
-    private fun changeTheme(mode: Int) {
-        themeDialog?.dismiss()
-        lifecycleScope.launch {
-            delay(100)
-            when (mode) {
-                0 -> mainViewModel.selectedThemeMode = 1
-                1 -> mainViewModel.selectedThemeMode = 2
-                2 -> mainViewModel.selectedThemeMode = -1
-                else -> mainViewModel.selectedThemeMode = -1
-            }
-            applyTheme()
         }
     }
 
@@ -180,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applyThemingConfig() {
-        val mode: Int = selectedTheme
+        val mode: Int = mainViewModel.selectedThemeMode
         if (mode == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) {
             when (mode) {
                 AppCompatDelegate.MODE_NIGHT_YES -> {

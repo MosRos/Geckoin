@@ -4,7 +4,10 @@ import android.app.Application
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import com.mrostami.geckoin.presentation.workers.SyncCoinsWorker
+import com.mrostami.geckoin.data.local.preferences.DataStoreHelper
+import com.mrostami.geckoin.data.local.preferences.PreferencesHelper
+import com.mrostami.geckoin.di.ApplicationModule
+import com.mrostami.geckoin.workers.SyncCoinsWorker
 import dagger.hilt.android.HiltAndroidApp
 import org.jetbrains.annotations.NonNls
 import timber.log.Timber
@@ -23,8 +26,8 @@ class GeckoinApp : Application(), Configuration.Provider {
         }
     }
 
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var preferenceHelper: PreferencesHelper
 
     override fun getWorkManagerConfiguration(): Configuration {
         return if (BuildConfig.DEBUG) {
@@ -45,11 +48,15 @@ class GeckoinApp : Application(), Configuration.Provider {
         instance = this
 
         initTimber()
-        initSyncWorker(this)
+//        initSyncWorker(this)
     }
 
     fun getAppContext() : Application {
         return instance
+    }
+
+    fun getThemeMode() : Int {
+        return preferenceHelper.selectedThemeMode
     }
 
     private fun initSyncWorker(context: Application) {

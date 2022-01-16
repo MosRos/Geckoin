@@ -3,13 +3,19 @@
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_market">Market</string>
+
     <string name="use_system_theme">Use System Theme</string>
+    <string name="theme">Theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
+    <string name="system_default">System Default</string>
+
+    <string name="about">About</string>
+    <string name="developer">Developer</string>
 
     <string name="bitcoin">Bitcoin</string>
     <string name="dominance">Dominance</string>
-    <string name="market_dominances">Market dominances</string>
+    <string name="market_dominance">Market dominance</string>
     <string name="trend_coins">Trend Coins</string>
     <string name="btc_24_h_price_chart">24h price chart</string>
     <string name="retry">Retry</string>

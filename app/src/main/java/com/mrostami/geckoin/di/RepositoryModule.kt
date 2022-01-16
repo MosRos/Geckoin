@@ -2,11 +2,9 @@ package com.mrostami.geckoin.di
 
 import com.mrostami.geckoin.data.local.LocalDataSource
 import com.mrostami.geckoin.data.remote.RemoteDataSource
-import com.mrostami.geckoin.data.repositories.AllCoinsRepositoryImpl
-import com.mrostami.geckoin.data.repositories.GlobalInfoRepositoryImpl
-import com.mrostami.geckoin.data.repositories.MarketRanksMediator
-import com.mrostami.geckoin.data.repositories.MarketRanksRepositoryImpl
+import com.mrostami.geckoin.data.repositories.*
 import com.mrostami.geckoin.domain.AllCoinsRepository
+import com.mrostami.geckoin.domain.AppConfigRepository
 import com.mrostami.geckoin.domain.GlobalInfoRepository
 import com.mrostami.geckoin.domain.MarketRanksRepository
 import dagger.Module
@@ -19,6 +17,14 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
+
+    @Singleton
+    @Provides
+    fun provideAppConfigRepository(
+        localDataSource: LocalDataSource
+    ) : AppConfigRepository {
+        return AppConfigRepositoryImpl(localDataSource = localDataSource)
+    }
 
     @Singleton
     @Provides

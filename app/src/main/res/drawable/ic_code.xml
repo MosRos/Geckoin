@@ -7,7 +7,14 @@
     android:tint="@color/icon_color">
     <path
         android:fillColor="#00000000"
-        android:pathData="M21,12.79A9,9 0,1 1,11.21 3,7 7,0 0,0 21,12.79z"
+        android:pathData="M16,18l6,-6l-6,-6"
+        android:strokeWidth="2"
+        android:strokeColor="#00000000"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M8,6l-6,6l6,6"
         android:strokeWidth="2"
         android:strokeColor="#00000000"
         android:strokeLineCap="round"
