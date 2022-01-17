@@ -53,7 +53,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menuThemeSetting"
-        app:startIcon="@drawable/ic_help_circle"
+        app:startIcon="@drawable/ic_outline_info"
         android:fontFamily="@font/firasans_regular"
         app:title="@string/about"
         app:showDescription="false"

@@ -2,6 +2,7 @@ package com.mrostami.geckoin
 
 import android.app.Application
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
 import com.mrostami.geckoin.data.local.preferences.DataStoreHelper
@@ -48,11 +49,17 @@ class GeckoinApp : Application(), Configuration.Provider {
         instance = this
 
         initTimber()
+        initAppConfig()
 //        initSyncWorker(this)
     }
 
     fun getAppContext() : Application {
         return instance
+    }
+
+    fun initAppConfig() {
+        val mode: Int = preferenceHelper.selectedThemeMode
+        AppCompatDelegate.setDefaultNightMode(mode)
     }
 
     fun getThemeMode() : Int {

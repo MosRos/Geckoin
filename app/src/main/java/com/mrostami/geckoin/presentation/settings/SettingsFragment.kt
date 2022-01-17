@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.SettingsFragmentBinding
 import com.mrostami.geckoin.presentation.utils.viewBinding
@@ -25,10 +26,18 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     private var themeDialogBuilder: AlertDialog.Builder? = null
     private var themeDialog: AlertDialog? = null
-    private var selectedTheme: Int = AppCompatDelegate.MODE_NIGHT_YES
+    private var selectedTheme: Int = AppCompatDelegate.getDefaultNightMode()
+
+    var themeModePairs: Array<Pair<Int, String>> = arrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        themeModePairs = arrayOf(
+            AppCompatDelegate.MODE_NIGHT_NO to getString(R.string.light),
+            AppCompatDelegate.MODE_NIGHT_YES to getString(R.string.dark),
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM to getString(R.string.system_default),
+            AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY to getString(R.string.auto_battery)
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,16 +56,14 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
             else -> setThemeIcon(R.drawable.ic_brightness_auto)
         }
+
+        binding.menuThemeSetting.description = themeModePairs.map { it.second }[getCheckedItemPosition()]
+
         binding.menuThemeSetting.rootLayout?.setOnClickListener {
-            if (selectedTheme < 0 || selectedTheme > 3) {
-                selectedTheme = 3
-            }
             showThemeDialog()
         }
+
         binding.imgLogo.setOnClickListener {
-            if (selectedTheme < 0 || selectedTheme > 3) {
-                selectedTheme = 3
-            }
             showThemeDialog()
         }
     }
@@ -82,12 +89,12 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     private fun initThemeSelectDialog() {
         context?.let { ctx ->
-            themeDialogBuilder = AlertDialog.Builder(ctx)
+            themeDialogBuilder = MaterialAlertDialogBuilder(ctx, R.style.AppTheme_AlertDialogTheme)
                 .setTitle("Please Select Theme")
                 .setCancelable(true)
                 .setSingleChoiceItems(
-                    arrayOf("Light", "Dark", "Auto"),
-                    selectedTheme - 1
+                    themeModePairs.map { it.second }.toTypedArray(),
+                    getCheckedItemPosition(),
                 ) { dialogInterface: DialogInterface?, i: Int ->
                     changeTheme(i)
                 }
@@ -97,7 +104,12 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     }
 
-    private fun changeTheme(mode: Int) {
+    private fun getCheckedItemPosition() : Int {
+        return themeModePairs.map { it.first }.indexOf(selectedTheme)
+    }
+
+    private fun changeTheme(position: Int) {
+        val mode: Int = themeModePairs.map { it.first }[position]
         themeDialog?.dismiss()
         lifecycleScope.launch {
             delay(100)

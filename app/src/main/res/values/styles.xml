@@ -91,18 +91,32 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="AppTheme.AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <!-- ColorPrimary corresponds to the color of a button in an alert dialog.-->
-        <item name="android:colorBackground">?attr/colorSurface</item>
-        <item name="colorPrimary">?attr/colorOnPrimary</item>
-        <item name="colorAccent">?attr/colorSecondary</item>
-    </style>
-
     <style name="Widget_Toggle_Option_Start_Title_Style" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/text_color_secondary</item>
     </style>
     <style name="Widget_Toggle_Option_End_Title_Style" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textColor">@color/text_color_secondary</item>
+    </style>
+
+    <!-- Shape Appearances -->
+    <style name="ShapeAppearance.MaterialComponents.MediumComponent.AlertView" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">@dimen/dialog_corner_radius</item>
+    </style>
+
+    <style name="AppTheme.AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <!-- ColorPrimary corresponds to the color of a button in an alert dialog.-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="cornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:colorBackground">@color/color_surface</item>
+        <item name="background">@color/color_surface</item>
+        <item name="backgroundTint">@color/color_surface</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorAccent">@color/color_primary</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.MaterialComponents.MediumComponent.AlertView</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MaterialComponents.MediumComponent.AlertView</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.BottomSheetDialog">

@@ -147,7 +147,7 @@ class MenuItemView @JvmOverloads constructor(
 
     private fun initView(mContext: Context) {
         val parent: View = View.inflate(mContext, R.layout.widget_menu_item, this)
-        rootLayout = parent
+        rootLayout = parent.findViewById(R.id.rootLayout)
         txtTitle = parent.findViewById(R.id.txtTitle)
         txtSubTitle = parent.findViewById(R.id.txtSubtitle)
         txtDescription = parent.findViewById(R.id.txtDescription)
