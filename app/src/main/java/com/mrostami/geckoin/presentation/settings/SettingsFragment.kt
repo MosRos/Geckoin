@@ -10,6 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.SettingsFragmentBinding
@@ -47,6 +49,32 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     }
 
     private fun registerWidgets() {
+        applyThemeIcon()
+        with(binding) {
+            imgLogo.load(R.mipmap.ic_launcher) {
+                crossfade(true)
+                placeholder(R.drawable.ic_launcher_foreground)
+                transformations(CircleCropTransformation())
+            }
+            menuThemeSetting.description =
+                themeModePairs.map { it.second }[getCheckedItemPosition()]
+            menuThemeSetting.rootLayout?.setOnClickListener {
+                showThemeDialog()
+            }
+        }
+    }
+
+    private fun setObservers() {
+
+    }
+
+    private fun setThemeIcon(@DrawableRes iconId: Int) {
+        context?.let { ctx ->
+            binding.menuThemeSetting.menuIcon = ContextCompat.getDrawable(ctx, iconId)
+        }
+    }
+
+    fun applyThemeIcon() {
         when (selectedTheme) {
             AppCompatDelegate.MODE_NIGHT_NO -> setThemeIcon(R.drawable.ic_sun)
 
@@ -56,34 +84,6 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
             else -> setThemeIcon(R.drawable.ic_brightness_auto)
         }
-
-        binding.menuThemeSetting.description = themeModePairs.map { it.second }[getCheckedItemPosition()]
-
-        binding.menuThemeSetting.rootLayout?.setOnClickListener {
-            showThemeDialog()
-        }
-
-        binding.imgLogo.setOnClickListener {
-            showThemeDialog()
-        }
-    }
-
-    private fun setObservers() {
-//        mainViewModel.themeMode.observe(this, Observer { mode ->
-//            when (mode) {
-//                AppCompatDelegate.MODE_NIGHT_NO -> setThemeIcon(R.drawable.ic_sun)
-//
-//                AppCompatDelegate.MODE_NIGHT_YES -> setThemeIcon(R.drawable.ic_moon)
-//
-//                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> setThemeIcon(R.drawable.ic_brightness_auto)
-//
-//                else -> setThemeIcon(R.drawable.ic_brightness_auto)
-//            }
-//        })
-    }
-
-    private fun setThemeIcon(@DrawableRes iconId: Int) {
-//        binding.themeSelectIcon.setImageDrawable(ContextCompat.getDrawable(this, iconId))
     }
 
 
@@ -104,7 +104,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     }
 
-    private fun getCheckedItemPosition() : Int {
+    private fun getCheckedItemPosition(): Int {
         return themeModePairs.map { it.first }.indexOf(selectedTheme)
     }
 

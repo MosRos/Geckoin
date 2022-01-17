@@ -1,8 +1,13 @@
 package com.mrostami.geckoin.presentation.base
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.transition.Fade
+import android.transition.TransitionInflater
+import android.view.Window
+import android.view.animation.LinearInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +16,7 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.presentation.utils.AppBarUtils
 import kotlinx.coroutines.flow.collect
 
-abstract class BaseActivity<viewModel: BaseActivityViewModel> : AppCompatActivity() {
+abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivity() {
 
     abstract val viewModel: BaseActivityViewModel
 
@@ -20,14 +25,27 @@ abstract class BaseActivity<viewModel: BaseActivityViewModel> : AppCompatActivit
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(selectedTheme)
         super.onCreate(savedInstanceState)
-        configTransition()
+        with(window) {
+            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+            enterTransition = TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_in)
+            exitTransition = TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_out)
+        }
+
         observeThemeChanges()
         applyThemingConfig()
         viewModel.getThemeMode()
     }
 
-    private fun configTransition() {
-        overridePendingTransition(R.anim.nav_default_enter_anim, R.anim.nav_default_exit_anim)
+    override fun onBackPressed() {
+        super.onBackPressed()
+        configTransition(isBack = true)
+    }
+
+    private fun configTransition(isBack: Boolean = false) {
+        if (isBack)
+            overridePendingTransition(R.anim.fade_out, R.anim.fade_in)
+        else
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun observeThemeChanges() {
@@ -42,7 +60,12 @@ abstract class BaseActivity<viewModel: BaseActivityViewModel> : AppCompatActivit
     }
 
     private fun applyTheme() {
-        this.recreate()
+        val restartIntent = Intent.makeRestartActivityTask(intent.component).apply {
+
+        }
+        startActivity(restartIntent)
+        configTransition(isBack = false)
+//        this.recreate()
     }
 
     private fun applyThemingConfig() {

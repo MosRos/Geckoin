@@ -27,29 +27,14 @@
             app:layout_scrollFlags="snap">
 
             <TextView
+                android:id="@+id/txtPageTitle"
                 android:gravity="center"
-                android:id="@+id/titleTxt"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:textColor="@color/text_color_primary"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:id="@+id/themeSelectIcon"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_width="wrap_content"
-                android:minHeight="32dp"
-                android:minWidth="32dp"
-                android:src="@drawable/ic_moon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

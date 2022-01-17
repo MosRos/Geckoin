@@ -32,6 +32,7 @@ class MenuItemView @JvmOverloads constructor(
     private var txtDescription: TextView? = null
     private var imgStartIcon: ImageView? = null
     private var imgEndIcon: ImageView? = null
+    private var dividerTop: View? = null
     private var dividerBottom: View? = null
 
     @FontRes
@@ -93,10 +94,17 @@ class MenuItemView @JvmOverloads constructor(
             field = value
             imgEndIcon?.isVisible = value
         }
-    var showBottomDivider: Boolean = true
+
+    var showBottomDivider: Boolean = false
         set(value) {
             field = value
             dividerBottom?.isVisible = value
+        }
+
+    var showTopDivider: Boolean = false
+        set(value) {
+            field = value
+            dividerTop?.isVisible = value
         }
 
     @StyleRes
@@ -128,7 +136,8 @@ class MenuItemView @JvmOverloads constructor(
             attr.getBoolean(R.styleable.MenuItemView_showEndIcon, true)
         val mStartIcon: Drawable? = attr.getDrawable(R.styleable.MenuItemView_startIcon)
         val mEndIcon: Drawable? = attr.getDrawable(R.styleable.MenuItemView_endIcon)
-        val mShowBottomDivider: Boolean = attr.getBoolean(R.styleable.MenuItemView_showBottomDivider, true)
+        val mShowTopDivider: Boolean = attr.getBoolean(R.styleable.MenuItemView_showTopDivider, false)
+        val mShowBottomDivider: Boolean = attr.getBoolean(R.styleable.MenuItemView_showBottomDivider, false)
 
         title = mTitle
         subTitle = mSubtitle
@@ -138,6 +147,7 @@ class MenuItemView @JvmOverloads constructor(
         showMenuIcon = mStartIconVisibility
         showEndIcon = mEndIconVisibility
         showBottomDivider = mShowBottomDivider
+        showTopDivider = mShowTopDivider
         menuIcon = mStartIcon
         endIcon = mEndIcon
 
@@ -153,7 +163,8 @@ class MenuItemView @JvmOverloads constructor(
         txtDescription = parent.findViewById(R.id.txtDescription)
         imgStartIcon = parent.findViewById(R.id.imgStartIcon)
         imgEndIcon = parent.findViewById(R.id.imgEndIcon)
-
+        dividerTop = parent.findViewById(R.id.topDivider)
+        dividerBottom = parent.findViewById(R.id.bottomDivider)
         setValues()
     }
 
@@ -169,6 +180,7 @@ class MenuItemView @JvmOverloads constructor(
         imgStartIcon?.isVisible = showMenuIcon
         imgEndIcon?.isVisible = showEndIcon
         dividerBottom?.isVisible = showBottomDivider
+        dividerTop?.isVisible = showTopDivider
     }
 
     private fun updateTextTypeface() {

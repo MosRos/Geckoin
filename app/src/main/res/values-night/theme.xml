@@ -30,6 +30,9 @@
 <!--        <item name="android:windowLightStatusBar">false</item>-->
         <item name="android:overScrollMode">never</item>
         <item name="android:windowTranslucentNavigation">false</item>
+
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
     </style>
 
     <style name="Base.DayNight" parent="Base.Theme">

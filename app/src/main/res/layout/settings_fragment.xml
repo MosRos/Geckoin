@@ -43,6 +43,7 @@
         app:showEndIcon="false"
         app:showStartIcon="true"
         app:showSubtitle="false"
+        app:showTopDivider="false"
         app:showBottomDivider="true"
         />
 
@@ -53,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menuThemeSetting"
-        app:startIcon="@drawable/ic_outline_info"
+        app:startIcon="@drawable/ic_info"
         android:fontFamily="@font/firasans_regular"
         app:title="@string/about"
         app:showDescription="false"
@@ -61,6 +62,7 @@
         app:showStartIcon="true"
         app:showSubtitle="false"
         app:showBottomDivider="true"
+        app:showTopDivider="false"
         />
 
     <com.mrostami.geckoin.presentation.widgets.MenuItemView
@@ -76,7 +78,8 @@
         app:showEndIcon="false"
         app:showStartIcon="true"
         app:showSubtitle="false"
-        app:showBottomDivider="true"
+        app:showTopDivider="false"
+        app:showBottomDivider="false"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

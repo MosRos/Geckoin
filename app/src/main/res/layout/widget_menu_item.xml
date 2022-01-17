@@ -10,6 +10,14 @@
     android:background="?attr/selectableItemBackground"
     android:id="@+id/rootLayout"
     android:minHeight="50dp">
+    <View
+        android:id="@+id/topDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintStart_toStartOf="@id/txtTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/divider_color"/>
     <ImageView
         android:id="@+id/imgStartIcon"
         android:layout_width="wrap_content"
@@ -65,7 +73,7 @@
         android:ellipsize="end"
         android:gravity="end|center_vertical"
         android:maxLines="1"
-        android:paddingEnd="8dp"
+        android:layout_marginEnd="@dimen/margin_normal"
         android:visibility="gone"
         tools:text="Everyday" />
     <ImageView
@@ -86,6 +94,5 @@
         app:layout_constraintStart_toStartOf="@id/txtTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="@dimen/margin_normal"
         android:background="@color/divider_color"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

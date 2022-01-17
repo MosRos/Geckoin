@@ -8,7 +8,9 @@
         <item name="cornerRadius">@dimen/dialog_corner_radius</item>
         <item name="android:colorBackground">@color/color_surface</item>
         <item name="background">@color/color_surface</item>
+        <item name="android:background">@color/color_surface</item>
         <item name="backgroundTint">@color/color_surface</item>
+        <item name="android:backgroundTint">@color/color_surface</item>
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorAccent">@color/color_primary</item>
         <item name="android:backgroundDimEnabled">true</item>
