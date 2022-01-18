@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/backgroundColor"
+    android:background="?android:attr/colorBackground"
     android:id="@+id/root_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
@@ -42,14 +42,14 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainNavHost"
         android:layout_height="0dp"
         android:layout_width="match_parent"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
         style="@style/Widget.BottomNav"

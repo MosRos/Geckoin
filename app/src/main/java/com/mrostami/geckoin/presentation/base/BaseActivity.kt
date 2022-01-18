@@ -4,10 +4,9 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.transition.Fade
 import android.transition.TransitionInflater
 import android.view.Window
-import android.view.animation.LinearInterpolator
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
@@ -16,9 +15,11 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.presentation.utils.AppBarUtils
 import kotlinx.coroutines.flow.collect
 
+
 abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivity() {
 
     abstract val viewModel: BaseActivityViewModel
+    abstract val layoutResId: Int
 
     private var selectedTheme: Int = GeckoinApp.getInstance().getThemeMode()
 
@@ -27,18 +28,23 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
         super.onCreate(savedInstanceState)
         with(window) {
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-            enterTransition = TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_in)
-            exitTransition = TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_out)
+            enterTransition =
+                TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_in)
+            exitTransition =
+                TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_out)
+            returnTransition =
+                TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_in)
+            reenterTransition =
+                TransitionInflater.from(this@BaseActivity).inflateTransition(R.transition.fade_out)
         }
-
-        observeThemeChanges()
+        setContentView(layoutResId)
         applyThemingConfig()
-        viewModel.getThemeMode()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        configTransition(isBack = true)
+    override fun onStart() {
+        super.onStart()
+        viewModel.getThemeMode()
+        observeThemeChanges()
     }
 
     private fun configTransition(isBack: Boolean = false) {
@@ -60,12 +66,15 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
     }
 
     private fun applyTheme() {
-        val restartIntent = Intent.makeRestartActivityTask(intent.component).apply {
+//        val restartIntent = Intent.makeRestartActivityTask(intent.component).apply {
+//        }
+//        startActivity(restartIntent)
+//        configTransition()
 
-        }
-        startActivity(restartIntent)
-        configTransition(isBack = false)
-//        this.recreate()
+//
+        configTransition()
+        recreate()
+        configTransition()
     }
 
     private fun applyThemingConfig() {

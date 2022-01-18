@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import com.google.gson.Gson
+import com.mrostami.geckoin.GeckoinApp
 import com.mrostami.geckoin.model.GlobalMarketInfo
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class PreferencesHelper @Inject constructor(
     ) {
 
     // Pairs of preferences key_name and default value
-    private val themeModePair = Pair("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    private val themeModePair = Pair("theme_mode", GeckoinApp.DEFAULT_THEME_MODE)
     private val authTokenPair = Pair<String, String?>("auth_token", null)
     private val globalMarketPair = Pair<String, String?>("global_market_info", null)
     private val lastSyncDate = Pair<String, Long>("last_sync_date", 0)

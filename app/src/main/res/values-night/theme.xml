@@ -32,7 +32,10 @@
         <item name="android:windowTranslucentNavigation">false</item>
 
         <!-- enable window content transitions -->
+        <item name="android:windowDisablePreview">false</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
     </style>
 
     <style name="Base.DayNight" parent="Base.Theme">
@@ -50,6 +53,11 @@
 
     <style name="MainTheme" parent="Base.DayNight">
         <item name="android:statusBarColor">?attr/backgroundColor</item>
+
+        <!-- enable window content transitions -->
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
 </resources>

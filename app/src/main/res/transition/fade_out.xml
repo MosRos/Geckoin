@@ -2,7 +2,8 @@
 <transitionSet
     xmlns:android="http://schemas.android.com/apk/res/android">
     <fade
-        android:duration="@android:integer/config_mediumAnimTime"
+        android:interpolator="@android:interpolator/linear"
+        android:duration="750"
         android:fromAlpha="1.0"
         android:toAlpha="0.0" />
 </transitionSet>

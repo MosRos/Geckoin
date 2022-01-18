@@ -19,6 +19,7 @@ import com.mrostami.geckoin.presentation.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.settings_fragment) {
@@ -57,7 +58,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                 transformations(CircleCropTransformation())
             }
             menuThemeSetting.description =
-                themeModePairs.map { it.second }[getCheckedItemPosition()]
+                themeModePairs.map { it.second }.getOrNull(getCheckedItemPosition())
             menuThemeSetting.rootLayout?.setOnClickListener {
                 showThemeDialog()
             }
@@ -105,7 +106,12 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     }
 
     private fun getCheckedItemPosition(): Int {
-        return themeModePairs.map { it.first }.indexOf(selectedTheme)
+        return try {
+            themeModePairs.map { it.first }.indexOf(selectedTheme)
+        } catch (e: Exception) {
+            Timber.e(e)
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        }
     }
 
     private fun changeTheme(position: Int) {

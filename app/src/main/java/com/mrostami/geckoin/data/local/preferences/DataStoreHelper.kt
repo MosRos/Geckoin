@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
+import com.mrostami.geckoin.GeckoinApp
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
 import java.io.IOException
@@ -26,7 +27,7 @@ class DataStoreHelper @Inject constructor(
 ) {
 
     // Pairs of preferences key_name and default value
-    private val themeModePair = Pair("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    private val themeModePair = Pair("theme_mode", GeckoinApp.DEFAULT_THEME_MODE)
 
     fun <T> DataStore<Preferences>.getValueFlow(
         key: Preferences.Key<T>,
@@ -52,7 +53,7 @@ class DataStoreHelper @Inject constructor(
 
     suspend fun getThemeMode() : Flow<Int> {
         val prefKeyName = intPreferencesKey(themeModePair.first)
-        val defaultValue: Int = AppCompatDelegate.MODE_NIGHT_NO
+        val defaultValue: Int = themeModePair.second
         return dataStore.getValueFlow(prefKeyName, defaultValue) ?: flowOf(defaultValue)
     }
 

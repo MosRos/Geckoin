@@ -19,6 +19,7 @@ import javax.inject.Inject
 class GeckoinApp : Application(), Configuration.Provider {
 
     companion object {
+        const val DEFAULT_THEME_MODE: Int = AppCompatDelegate.MODE_NIGHT_NO
         private lateinit var instance: GeckoinApp
         private set
 
@@ -58,8 +59,7 @@ class GeckoinApp : Application(), Configuration.Provider {
     }
 
     fun initAppConfig() {
-        val mode: Int = preferenceHelper.selectedThemeMode
-        AppCompatDelegate.setDefaultNightMode(mode)
+        AppCompatDelegate.setDefaultNightMode(DEFAULT_THEME_MODE)
     }
 
     fun getThemeMode() : Int {
