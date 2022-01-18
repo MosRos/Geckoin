@@ -10,8 +10,8 @@
 
     <style name="Widget.AS.AppBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:background">?attr/backgroundColor</item>
-        <item name="elevation">10dp</item>
-        <item name="android:elevation">10dp</item>
+        <item name="elevation">@dimen/app_bar_elevation</item>
+        <item name="android:elevation">@dimen/app_bar_elevation</item>
     </style>
 
     <style name="Widget.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
@@ -21,6 +21,6 @@
         <item name="itemTextColor">@drawable/selector_bottom_nav</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavSelected</item>
         <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNav</item>
-        <item name="elevation">0dp</item>
+        <item name="elevation">@dimen/bottom_nav_elevation</item>
     </style>
 </resources>

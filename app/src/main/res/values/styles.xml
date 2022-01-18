@@ -13,8 +13,8 @@
 
     <style name="Widget.AS.AppBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:background">?attr/colorSurface</item>
-        <item name="elevation">10dp</item>
-        <item name="android:elevation">10dp</item>
+        <item name="elevation">@dimen/app_bar_elevation</item>
+        <item name="android:elevation">@dimen/app_bar_elevation</item>
     </style>
 
     <style name="TextAppearance.CoinPrice" parent="Widget.AppCompat.TextView">
@@ -72,7 +72,7 @@
         <item name="itemTextColor">@drawable/selector_bottom_nav</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavSelected</item>
         <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNav</item>
-        <item name="elevation">4dp</item>
+        <item name="elevation">@dimen/bottom_nav_elevation</item>
     </style>
 
     <style name="TextAppearance.BottomNavSelected" parent="Widget.AppCompat.TextView">

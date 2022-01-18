@@ -12,6 +12,8 @@
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_Stroke_width">1dp</dimen>
     <dimen name="dialog_corner_radius">10dp</dimen>
+    <dimen name="app_bar_elevation">2dp</dimen>
+    <dimen name="bottom_nav_elevation">2dp</dimen>
 
     <dimen name="text_size_headline_3">20sp</dimen>
     <dimen name="text_size_header">18sp</dimen>
