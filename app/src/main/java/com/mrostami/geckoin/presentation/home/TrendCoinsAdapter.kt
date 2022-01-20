@@ -1,7 +1,6 @@
 package com.mrostami.geckoin.presentation.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -13,9 +12,9 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.ListItemTrendCoinBinding
 import com.mrostami.geckoin.model.TrendCoin
 
-class TrenCoinsAdapter(
+class TrendCoinsAdapter(
     private val onItemClicked: ((TrendCoin, Int) -> Unit)? = null
-) : ListAdapter<TrendCoin, TrenCoinsAdapter.TrendCoinsViewHolder>(
+) : ListAdapter<TrendCoin, TrendCoinsAdapter.TrendCoinsViewHolder>(
     TrendsComparator
 ) {
 
@@ -31,17 +30,6 @@ class TrenCoinsAdapter(
         }
     }
 
-    private var items: ArrayList<TrendCoin> = arrayListOf()
-    fun submitTrendCoins(newItems: List<TrendCoin>) {
-        items.clear()
-        items.addAll(newItems)
-        submitList(items)
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendCoinsViewHolder {
         val binding =
             ListItemTrendCoinBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -49,8 +37,7 @@ class TrenCoinsAdapter(
     }
 
     override fun onBindViewHolder(holder: TrendCoinsViewHolder, position: Int) {
-        val coin: TrendCoin = items[position]
-        holder.bind(coin)
+        holder.bind(getItem(position))
     }
 
     inner class TrendCoinsViewHolder(
@@ -60,7 +47,7 @@ class TrenCoinsAdapter(
 
         init {
             binding.rootLayout.setOnClickListener {
-                itemListener?.invoke(items[bindingAdapterPosition], bindingAdapterPosition)
+                itemListener?.invoke(getItem(bindingAdapterPosition), bindingAdapterPosition)
             }
         }
 

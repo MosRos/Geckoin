@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/backgroundColor">
+        android:background="?android:attr/colorBackground">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/startGuide"
@@ -185,7 +185,7 @@
                     android:layout_gravity="top"
                     style="@style/TextAppearance.CoinSymbol"
                     android:gravity="center|start"
-                    android:text="@string/market_dominances"
+                    android:text="@string/market_dominance"
                     />
 
                 <com.github.mikephil.charting.charts.PieChart

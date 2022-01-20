@@ -13,8 +13,8 @@
 
     <style name="Widget.AS.AppBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="android:background">?attr/colorSurface</item>
-        <item name="elevation">10dp</item>
-        <item name="android:elevation">10dp</item>
+        <item name="elevation">@dimen/app_bar_elevation</item>
+        <item name="android:elevation">@dimen/app_bar_elevation</item>
     </style>
 
     <style name="TextAppearance.CoinPrice" parent="Widget.AppCompat.TextView">
@@ -53,6 +53,12 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="TextAppearance.SettingsItem" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/firasans_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="TextAppearance.TrendCoinRank" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_medium</item>
         <item name="android:textSize">14sp</item>
@@ -66,7 +72,7 @@
         <item name="itemTextColor">@drawable/selector_bottom_nav</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavSelected</item>
         <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNav</item>
-        <item name="elevation">4dp</item>
+        <item name="elevation">@dimen/bottom_nav_elevation</item>
     </style>
 
     <style name="TextAppearance.BottomNavSelected" parent="Widget.AppCompat.TextView">
@@ -85,18 +91,34 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="AppTheme.AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
-        <!-- ColorPrimary corresponds to the color of a button in an alert dialog.-->
-        <item name="android:colorBackground">?attr/colorSurface</item>
-        <item name="colorPrimary">?attr/colorOnPrimary</item>
-        <item name="colorAccent">?attr/colorSecondary</item>
-    </style>
-
     <style name="Widget_Toggle_Option_Start_Title_Style" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textColor">@color/text_color_secondary</item>
     </style>
     <style name="Widget_Toggle_Option_End_Title_Style" parent="TextAppearance.AppCompat.Body2">
         <item name="android:textColor">@color/text_color_secondary</item>
+    </style>
+
+    <!-- Shape Appearances -->
+    <style name="ShapeAppearance.MaterialComponents.MediumComponent.AlertView" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerRadius">@dimen/dialog_corner_radius</item>
+    </style>
+
+    <style name="AppTheme.AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <!-- ColorPrimary corresponds to the color of a button in an alert dialog.-->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="cornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:colorBackground">@color/color_surface</item>
+        <item name="background">@color/color_surface</item>
+        <item name="android:background">@color/color_surface</item>
+        <item name="backgroundTint">@color/color_surface</item>
+        <item name="android:backgroundTint">@color/color_surface</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorAccent">@color/color_primary</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.MaterialComponents.MediumComponent.AlertView</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MaterialComponents.MediumComponent.AlertView</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.BottomSheetDialog">

@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/backgroundColor"
+    android:background="?android:attr/colorBackground"
     android:id="@+id/root_layout"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:animateLayoutChanges="true">
 
     <com.google.android.material.appbar.AppBarLayout
         style="@style/Widget.AS.AppBar"
@@ -14,11 +15,9 @@
         android:id="@+id/appBarLayout"
         android:layout_height="wrap_content"
         android:layout_width="0dp"
-        app:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:liftOnScroll="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_height="?android:attr/actionBarSize"
@@ -26,29 +25,14 @@
             app:layout_scrollFlags="snap">
 
             <TextView
+                android:id="@+id/txtPageTitle"
                 android:gravity="center"
-                android:id="@+id/titleTxt"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:textColor="@color/text_color_primary"
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
-            <ImageButton
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:focusable="true"
-                android:id="@+id/themeSelectIcon"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_normal"
-                android:layout_marginStart="@dimen/margin_normal"
-                android:layout_width="wrap_content"
-                android:minHeight="32dp"
-                android:minWidth="32dp"
-                android:src="@drawable/ic_moon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -56,30 +40,27 @@
                 app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.appbar.AppBarLayout>
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainNavHost"
         android:layout_height="0dp"
         android:layout_width="match_parent"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:defaultNavHost="true"
         app:navGraph="@navigation/main_navigation" />
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        style="@style/Widget.BottomNav"
         android:id="@+id/bottomNavigation"
         android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
-        android:layout_width="0dp"
-        app:itemIconTint="@drawable/selector_bottom_nav"
-        app:itemTextAppearanceActive="@style/TextAppearance.BottomNavSelected"
-        app:itemTextAppearanceInactive="@style/TextAppearance.BottomNav"
-        app:itemTextColor="@drawable/selector_bottom_nav"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        style="@style/Widget.BottomNav"
+        />
 
     <View
         android:layout_width="match_parent"

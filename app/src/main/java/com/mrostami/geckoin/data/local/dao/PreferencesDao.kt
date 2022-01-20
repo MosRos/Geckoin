@@ -1,9 +1,11 @@
 package com.mrostami.geckoin.data.local.dao
 
+import kotlinx.coroutines.flow.Flow
+
 interface PreferencesDao {
 
-    fun setSelectedTheme(mode: Int)
-    fun getSelectedTheme() : Int
+    suspend fun changeTheme(mode: Int)
+    suspend fun getThemeMode() : Flow<Int>
 
     fun setAuthToken(token: String)
     fun getAuthToken() : String?

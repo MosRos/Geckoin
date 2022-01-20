@@ -2,13 +2,16 @@ package com.mrostami.geckoin.data.local
 
 import androidx.paging.PagingSource
 import com.mrostami.geckoin.data.local.dao.*
+import com.mrostami.geckoin.data.local.preferences.DataStoreHelper
 import com.mrostami.geckoin.data.local.preferences.PreferencesHelper
 import com.mrostami.geckoin.model.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(
     private val cryptoDataBase: CryptoDataBase,
-    private val preferencesHelper: PreferencesHelper
+    private val preferencesHelper: PreferencesHelper,
+    private val dataStoreHelper: DataStoreHelper
 ) : PreferencesDao, GlobalInfoDao, CryptoRanksDao, RemoteKeysDao, AllCoinsDao {
 
     private val globalInfoDao: GlobalInfoDao by lazy { cryptoDataBase.globalInfoDao() }
@@ -17,12 +20,13 @@ class LocalDataSource @Inject constructor(
     private val allCoinsDao by lazy { cryptoDataBase.allCoinsDao() }
 
     // Preferences setter and getter
-    override fun setSelectedTheme(mode: Int) {
+    override suspend fun changeTheme(mode: Int) {
         preferencesHelper.selectedThemeMode = mode
+        dataStoreHelper.changeTheme(mode)
     }
 
-    override fun getSelectedTheme(): Int {
-        return preferencesHelper.selectedThemeMode
+    override suspend fun getThemeMode(): Flow<Int> {
+        return dataStoreHelper.getThemeMode()
     }
 
     override fun getAuthToken(): String? {
