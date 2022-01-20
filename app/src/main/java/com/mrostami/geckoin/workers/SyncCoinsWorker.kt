@@ -6,7 +6,7 @@
  *
  */
 
-package com.mrostami.geckoin.presentation.workers
+package com.mrostami.geckoin.workers
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker

@@ -2,9 +2,13 @@ package com.mrostami.geckoin
 
 import android.app.Application
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.*
-import com.mrostami.geckoin.presentation.workers.SyncCoinsWorker
+import com.mrostami.geckoin.data.local.preferences.DataStoreHelper
+import com.mrostami.geckoin.data.local.preferences.PreferencesHelper
+import com.mrostami.geckoin.di.ApplicationModule
+import com.mrostami.geckoin.workers.SyncCoinsWorker
 import dagger.hilt.android.HiltAndroidApp
 import org.jetbrains.annotations.NonNls
 import timber.log.Timber
@@ -15,6 +19,7 @@ import javax.inject.Inject
 class GeckoinApp : Application(), Configuration.Provider {
 
     companion object {
+        const val DEFAULT_THEME_MODE: Int = AppCompatDelegate.MODE_NIGHT_NO
         private lateinit var instance: GeckoinApp
         private set
 
@@ -23,8 +28,8 @@ class GeckoinApp : Application(), Configuration.Provider {
         }
     }
 
-    @Inject
-    lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var preferenceHelper: PreferencesHelper
 
     override fun getWorkManagerConfiguration(): Configuration {
         return if (BuildConfig.DEBUG) {
@@ -45,11 +50,20 @@ class GeckoinApp : Application(), Configuration.Provider {
         instance = this
 
         initTimber()
-        initSyncWorker(this)
+        initAppConfig()
+//        initSyncWorker(this)
     }
 
     fun getAppContext() : Application {
         return instance
+    }
+
+    fun initAppConfig() {
+        AppCompatDelegate.setDefaultNightMode(DEFAULT_THEME_MODE)
+    }
+
+    fun getThemeMode() : Int {
+        return preferenceHelper.selectedThemeMode
     }
 
     private fun initSyncWorker(context: Application) {

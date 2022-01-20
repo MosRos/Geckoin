@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <!-- ColorPrimary corresponds to the color of a button in an alert dialog.-->
+        <item name="android:dialogCornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="cornerRadius">@dimen/dialog_corner_radius</item>
+        <item name="android:colorBackground">@color/color_surface</item>
+        <item name="background">@color/color_surface</item>
+        <item name="android:background">@color/color_surface</item>
+        <item name="backgroundTint">@color/color_surface</item>
+        <item name="android:backgroundTint">@color/color_surface</item>
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorAccent">@color/color_primary</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.MaterialComponents.MediumComponent.AlertView</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MaterialComponents.MediumComponent.AlertView</item>
+    </style>
+</resources>
