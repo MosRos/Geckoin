@@ -33,6 +33,7 @@ import com.mrostami.geckoin.model.*
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -49,7 +50,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         context?.showToast("${trendCoin.name}")
     }
     private var trendsRecycler: RecyclerView? = null
-    private var trendsAdapter: TrenCoinsAdapter? = null
+    private var trendsAdapter: TrendCoinsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -184,7 +185,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun initTrendRecyclerview() {
 
-        trendsAdapter = TrenCoinsAdapter(onTrendCoinClicked)
+        trendsAdapter = TrendCoinsAdapter(onTrendCoinClicked)
 
         val llManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val dividerDrawable: Drawable? = context?.let { ctx ->
@@ -208,7 +209,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun updateTrendAdapter(coins: List<TrendCoin>) {
-        trendsAdapter?.submitTrendCoins(coins)
+        viewLifecycleOwner.lifecycleScope.launch {
+            trendsAdapter?.submitList(coins)
+        }
     }
 
     private fun updateBitcoinPriceInfo(priceInfo: BitcoinPriceInfo) {

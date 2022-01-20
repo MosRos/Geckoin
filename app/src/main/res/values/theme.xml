@@ -26,10 +26,9 @@
         <item name="android:textColorLink">@color/color_primary_variant</item>
         <item name="android:textColorLinkInverse">@color/color_secondary_variant</item>
 
-        <item name="android:statusBarColor">@color/color_surface</item>
-<!--        <item name="android:windowLightStatusBar">false</item>-->
         <item name="android:overScrollMode">never</item>
 
+        <item name="android:statusBarColor">@color/color_background</item>
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">false</item>
 
@@ -55,6 +54,7 @@
 
     <style name="MainTheme" parent="Base.DayNight">
         <item name="android:statusBarColor">?attr/colorSurface</item>
+
 
         <!-- enable window content transitions -->
         <item name="android:windowDisablePreview">true</item>
