@@ -46,15 +46,15 @@ class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
     }
     private var ranksLoadingStateAdapter: RanksLoadingStateAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getPagedRankedCoins()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
         setObservers()
+    }
+
+    private fun requestForData() {
+        viewModel.getPagedRankedCoins()
     }
 
     private fun setObservers() {

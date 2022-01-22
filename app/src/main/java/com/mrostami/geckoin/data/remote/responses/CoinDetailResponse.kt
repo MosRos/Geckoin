@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 
-data class CoinInfo(
+data class CoinDetailResponse(
 
     @SerializedName("id")
     var id: String? = null, // bitcoin

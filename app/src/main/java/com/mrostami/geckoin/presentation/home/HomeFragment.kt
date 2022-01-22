@@ -33,6 +33,7 @@ import com.mrostami.geckoin.model.*
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -45,25 +46,24 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private var bitcoinPriceChart: LineChart? = null
     private var dominancePieChart: PieChart? = null
     private var trendCoinsRecycler: RecyclerView? = null
+    private var trendsAdapter: TrendCoinsAdapter? = null
 
     private val onTrendCoinClicked: (TrendCoin, Int) -> Unit = { trendCoin, i ->
         context?.showToast("${trendCoin.name}")
-    }
-    private var trendsRecycler: RecyclerView? = null
-    private var trendsAdapter: TrendCoinsAdapter? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getBitcoinPriceInfo(forceRefresh = true)
-        viewModel.getBitcoinChartInfo(forceRefresh = true)
-        viewModel.getGlobalInfo(forceRefresh = true)
-        viewModel.getTrendCoins(forceRefresh = true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerWidgets()
         setObservables()
+        requestForData()
+    }
+
+    private fun requestForData() {
+        viewModel.getBitcoinPriceInfo()
+        viewModel.getBitcoinChartInfo()
+        viewModel.getGlobalInfo()
+        viewModel.getTrendCoins()
     }
 
     private fun registerWidgets() {
@@ -91,11 +91,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
 //                        binding.progressBar.isVisible = false
                         Timber.e("Bitcoin Price Info Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error getting Bitcoin info: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error getting Bitcoin info: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
 //                        binding.progressBar.isVisible = true
@@ -117,11 +116,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
                         binding.bitcoinProgressBar.isVisible = false
                         Timber.e("Bitcoin Chart Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error getting Bitcoin Chart info: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error getting Bitcoin Chart info: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
                         binding.bitcoinProgressBar.isVisible = true
@@ -143,11 +141,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
                         binding.dominanceProgressBar.isVisible = false
                         Timber.e("Global Info Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error getting global info: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error getting global info: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
                         binding.dominanceProgressBar.isVisible = true
@@ -169,11 +166,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
                         binding.trendCoinsProgressBar.isVisible = false
                         Timber.e("TrendCoins Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error Getting Trend coins: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error Getting Trend coins: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
                         binding.trendCoinsProgressBar.isVisible = true

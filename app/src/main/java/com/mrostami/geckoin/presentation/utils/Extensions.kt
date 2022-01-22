@@ -18,7 +18,7 @@ fun Context.showToast(
     message: String,
     length: Int = Toast.LENGTH_SHORT
 ) {
-    Toast.makeText(applicationContext, message, length).show()
+    Toast.makeText(this, message, length).show()
 }
 
 fun Context.getColour(@ColorRes colorResId: Int) : Int {

@@ -40,10 +40,6 @@ class SearchFragment: Fragment(R.layout.search_fragment) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        lifecycleScope.launch {
-            delay(200)
-            viewModel.searchCoins("")
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,6 +47,13 @@ class SearchFragment: Fragment(R.layout.search_fragment) {
         initWidgets()
         setListeners()
         setObservers()
+    }
+
+    private fun requestForData() {
+        lifecycleScope.launch {
+            delay(200)
+            viewModel.searchCoins("")
+        }
     }
 
     private fun setObservers() {

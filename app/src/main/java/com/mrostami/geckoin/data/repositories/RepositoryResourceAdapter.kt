@@ -6,6 +6,7 @@ import com.mrostami.geckoin.domain.base.Result
 import com.mrostami.geckoin.presentation.utils.NetworkUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -50,8 +51,8 @@ abstract class RepositoryResourceAdapter<in P : Any?, T : Any?, U : Any, V : Any
     open fun execute(parameters: P) : Flow<Result<T>> = flow {
         val cachedData = getFromDatabase()
 
-        if (validateCache(cachedData)) {
-            emit(Result.Success(cachedData!!))
+        if (validateCache(cachedData) && cachedData != null) {
+            emit(Result.Success(cachedData))
         } else {
             emit(Result.Empty)
         }
@@ -78,7 +79,7 @@ abstract class RepositoryResourceAdapter<in P : Any?, T : Any?, U : Any, V : Any
                     }
                 }
             } else {
-                kotlinx.coroutines.delay(350)
+                delay(300L)
                 emit(Result.Error(Exception("No internet connection"), message = "No internet connection"))
             }
         }
@@ -143,7 +144,6 @@ abstract class RepositoryAdapter<in P: Any?, T: Any, R: Any>(
                 }
             }
         } else {
-            kotlinx.coroutines.delay(350)
             emit(Result.Error(Exception("No internet connection"), message = "No internet connection"))
         }
     }.catch { e ->
