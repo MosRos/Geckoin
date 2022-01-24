@@ -8,7 +8,7 @@ import com.mrostami.geckoin.data.remote.responses.TrendCoinsResponse
 import com.mrostami.geckoin.model.Coin
 import com.mrostami.geckoin.model.CoinDetailResponse
 import com.mrostami.geckoin.model.RankedCoin
-import com.mrostami.geckoin.model.SimplePriceInfoResponse
+import com.mrostami.geckoin.model.BitcoinSimplePriceInfoResponse
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -31,17 +31,28 @@ class RemoteDataSource @Inject constructor(
         return coinGeckoApiService.getTrendingCoins()
     }
 
-    override suspend fun getSimplePrice(
-        ids: String,
+    override suspend fun getBitcoinSimplePrice(
+        id: String,
         vsCurrency: String,
         includeMarketCap: Boolean,
         include24HrVolume: Boolean,
         include24HrChange: Boolean,
         includeLastUpdateTime: Boolean
-    ): NetworkResponse<SimplePriceInfoResponse, CoinGeckoApiError> {
-        return coinGeckoApiService.getSimplePrice(
-            ids = ids
+    ): NetworkResponse<BitcoinSimplePriceInfoResponse, CoinGeckoApiError> {
+        return coinGeckoApiService.getBitcoinSimplePrice(
+            id = id
         )
+    }
+
+    override suspend fun getSimplePrice(
+        coinId: String,
+        vsCurrency: String,
+        includeMarketCap: Boolean,
+        include24HrVolume: Boolean,
+        include24HrChange: Boolean,
+        includeLastUpdateTime: Boolean
+    ): NetworkResponse<ResponseBody, CoinGeckoApiError> {
+        return coinGeckoApiService.getSimplePrice(id = coinId)
     }
 
     override suspend fun getMarketChartInfo(

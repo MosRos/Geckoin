@@ -2,7 +2,6 @@ package com.mrostami.geckoin.presentation.ranking
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -10,10 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,10 +24,8 @@ import com.mrostami.geckoin.presentation.utils.showToast
 import com.mrostami.geckoin.presentation.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
@@ -41,7 +36,6 @@ class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
     private var rankRecycler: RecyclerView? = null
     private var marketRanksAdapter: RankedCoinsAdapter? = null
     private val onRankedItemClicked: (RankedCoin, Int) -> Unit = { coin, i ->
-        context?.showToast("clicked ${coin.name} + $i")
         if (coin.id != null) {
             val coinDetailsDirection =
                 CoinDetailsFragmentDirections.actionGlobalCoinDetails(coinId = coin.id)
@@ -104,7 +98,8 @@ class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
     }
 
     private fun initWidgets() {
-        ranksLoadingStateAdapter = RanksLoadingStateAdapter(onRanksRetryClicked, viewLifecycleOwner.lifecycleScope)
+        ranksLoadingStateAdapter =
+            RanksLoadingStateAdapter(onRanksRetryClicked, viewLifecycleOwner.lifecycleScope)
         marketRanksAdapter = RankedCoinsAdapter(onRankedItemClicked).apply {
             ranksLoadingStateAdapter?.let {
                 withLoadStateFooter(

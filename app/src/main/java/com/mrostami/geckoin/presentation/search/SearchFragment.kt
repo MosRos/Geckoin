@@ -4,40 +4,33 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.SearchFragmentBinding
-import com.mrostami.geckoin.domain.base.Result
 import com.mrostami.geckoin.model.Coin
 import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirections
-import com.mrostami.geckoin.presentation.utils.showSnack
-import com.mrostami.geckoin.presentation.utils.showToast
 import com.mrostami.geckoin.presentation.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
-class SearchFragment: Fragment(R.layout.search_fragment) {
+class SearchFragment : Fragment(R.layout.search_fragment) {
 
     private val binding: SearchFragmentBinding by viewBinding(SearchFragmentBinding::bind)
     val viewModel: SearchViewModel by viewModels()
 
     private var coinsRecycler: RecyclerView? = null
     private var coinsAdapter: CoinsAdapter? = null
-    private val onCoinClicked: (Coin) -> Unit =  { coin->
-        context?.showToast( "${coin.name} + ${coin.symbol} clicked", Toast.LENGTH_SHORT)
+    private val onCoinClicked: (Coin) -> Unit = { coin ->
         if (coin.id != null) {
             val coinDetailsDirection =
                 CoinDetailsFragmentDirections.actionGlobalCoinDetails(coinId = coin.id)
@@ -114,11 +107,12 @@ class SearchFragment: Fragment(R.layout.search_fragment) {
     }
 
     private fun doSearch(input: String) {
-            viewModel.searchCoins(input)
+        viewModel.searchCoins(input)
     }
 
     private suspend fun updateCoinsAdapter(coins: PagingData<Coin>) {
-        coinsAdapter?.submitData(coins)
+        coinsAdapter?.submitData(viewLifecycleOwner.lifecycle, coins)
+//        coinsAdapter?.submitData(coins)
         binding.progressBar.isVisible = false
     }
 }

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="chart_card_aspect_ration">H,1:1</string>
+    <string name="chart_card_aspect_ration">H,2:1</string>
 </resources>

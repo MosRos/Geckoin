@@ -35,7 +35,6 @@ import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirecti
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -218,33 +217,32 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun updateBitcoinPriceInfo(priceInfo: BitcoinPriceInfo) {
         val changePercentage: Double = priceInfo.info.usd24hChange ?: 0.0
-        val price: Int = priceInfo.info.usd ?: 0
+        val price: Double = priceInfo.info.usd ?: 0.0
         val vol: Long = priceInfo.info.usd24hVol?.toLong() ?: 0L
         val cap: Long = priceInfo.info.usdMarketCap?.toLong() ?: 0L
         with(binding) {
             imgBitcoin.load(R.drawable.bitcoin_logo)
-            txtBtcPrice.text = "$ " + price.decimalFormat()
+            txtBtcPrice.text = "$ " + price.toReadablePrice()
             txtPricePercentChange.text = changePercentage.round(decimals = 2).toString() + "%"
+            txtPricePercentChange.applyPriceStateTextColor(changePercentage)
             txtBtc24hVol.text = "vol: " + vol.decimalFormat()
             txtBtc24hCap.text = "cap: " + cap.decimalFormat()
         }
-        applyMarketStateColor(changePercentage)
+        setUpOrDownIcon(changePercentage)
     }
 
-    private fun applyMarketStateColor(change: Double) {
-        val red: Int = context?.getColour(R.color.down_red) ?: Color.parseColor("#D32F2F")
-        val green: Int = context?.getColour(R.color.up_green) ?: Color.parseColor("#00796B")
-
-        when {
-            change > 0 -> {
-                binding.txtPricePercentChange.setTextColor(green)
-                binding.imgUpDown.imageTintList = ColorStateList.valueOf(green)
-                binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_up)
-            }
-            change < 0 -> {
-                binding.txtPricePercentChange.setTextColor(red)
-                binding.imgUpDown.imageTintList = ColorStateList.valueOf(red)
-                binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_down)
+    private fun setUpOrDownIcon(change: Double) {
+        val upOrDownColor: Int? = context?.getUpOrDownColor(change)
+        if (upOrDownColor != null) {
+            when {
+                change > 0 -> {
+                    binding.imgUpDown.imageTintList = ColorStateList.valueOf(upOrDownColor)
+                    binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_up)
+                }
+                change < 0 -> {
+                    binding.imgUpDown.imageTintList = ColorStateList.valueOf(upOrDownColor)
+                    binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_down)
+                }
             }
         }
     }
@@ -398,7 +396,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 isEnabled = false
             }
             data = PieData(
-                    PieDataSet(listOf(PieEntry(0f, 0f)), "")
+                PieDataSet(listOf(PieEntry(0f, 0f)), "")
             )
         }
     }

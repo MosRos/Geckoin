@@ -8,7 +8,7 @@ import com.mrostami.geckoin.data.remote.responses.TrendCoinsResponse
 import com.mrostami.geckoin.model.Coin
 import com.mrostami.geckoin.model.CoinDetailResponse
 import com.mrostami.geckoin.model.RankedCoin
-import com.mrostami.geckoin.model.SimplePriceInfoResponse
+import com.mrostami.geckoin.model.BitcoinSimplePriceInfoResponse
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,14 +34,25 @@ interface CoinGeckoService {
 
     // Price Info for a coin
     @GET("simple/price")
-    suspend fun getSimplePrice(
-        @Query("ids") ids: String = "bitcoin",
+    suspend fun getBitcoinSimplePrice(
+        @Query("ids") id: String = "bitcoin",
         @Query("vs_currencies") vsCurrency: String = "usd",
         @Query("include_market_cap") includeMarketCap: Boolean = true,
         @Query("include_24hr_vol") include24HrVolume: Boolean = true,
         @Query("include_24hr_change") include24HrChange: Boolean = true,
         @Query("include_last_updated_at") includeLastUpdateTime: Boolean = true
-    ) : NetworkResponse<SimplePriceInfoResponse, CoinGeckoApiError>
+    ) : NetworkResponse<BitcoinSimplePriceInfoResponse, CoinGeckoApiError>
+
+    // Price Info for a coin
+    @GET("simple/price")
+    suspend fun getSimplePrice(
+        @Query("ids") id: String = "bitcoin",
+        @Query("vs_currencies") vsCurrency: String = "usd",
+        @Query("include_market_cap") includeMarketCap: Boolean = true,
+        @Query("include_24hr_vol") include24HrVolume: Boolean = true,
+        @Query("include_24hr_change") include24HrChange: Boolean = true,
+        @Query("include_last_updated_at") includeLastUpdateTime: Boolean = true
+    ) : NetworkResponse<ResponseBody, CoinGeckoApiError>
 
     // Price chart Info
     @GET("coins/{id}/market_chart")

@@ -53,7 +53,7 @@ class TrendCoinsAdapter(
 
         fun bind(coin: TrendCoin) {
             with(binding) {
-                imgCoinLogo.load(coin.small){
+                imgCoinLogo.load(coin.small) {
                     networkCachePolicy(CachePolicy.ENABLED)
                     diskCachePolicy(CachePolicy.ENABLED)
                     networkCachePolicy(CachePolicy.ENABLED)
@@ -63,7 +63,6 @@ class TrendCoinsAdapter(
                 }
                 txtCoinSymbol.text = coin.symbol
                 txtCoinName.text = coin.name
-//                txtCoinPrice.text = coin.priceBtc?.toString() + "(btc)"
                 txtRank.text = "# ${coin.marketCapRank}"
             }
 
