@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -18,6 +19,7 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.SearchFragmentBinding
 import com.mrostami.geckoin.domain.base.Result
 import com.mrostami.geckoin.model.Coin
+import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirections
 import com.mrostami.geckoin.presentation.utils.showSnack
 import com.mrostami.geckoin.presentation.utils.showToast
 import com.mrostami.geckoin.presentation.utils.viewBinding
@@ -36,10 +38,11 @@ class SearchFragment: Fragment(R.layout.search_fragment) {
     private var coinsAdapter: CoinsAdapter? = null
     private val onCoinClicked: (Coin) -> Unit =  { coin->
         context?.showToast( "${coin.name} + ${coin.symbol} clicked", Toast.LENGTH_SHORT)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        if (coin.id != null) {
+            val coinDetailsDirection =
+                CoinDetailsFragmentDirections.actionGlobalCoinDetails(coinId = coin.id)
+            Navigation.findNavController(binding.rootLayout).navigate(coinDetailsDirection)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,6 +50,7 @@ class SearchFragment: Fragment(R.layout.search_fragment) {
         initWidgets()
         setListeners()
         setObservers()
+        requestForData()
     }
 
     private fun requestForData() {
@@ -58,13 +62,13 @@ class SearchFragment: Fragment(R.layout.search_fragment) {
 
     private fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.searchResultsState.collectLatest { result ->
+            viewModel.searchResultsState.collect { result ->
                 updateCoinsAdapter(result)
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            coinsAdapter?.loadStateFlow?.collectLatest { loadingState ->
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            coinsAdapter?.loadStateFlow?.collect { loadingState ->
                 if (loadingState.source.append == LoadState.Loading) {
                     binding.searchProgress.isVisible = true
                 } else {

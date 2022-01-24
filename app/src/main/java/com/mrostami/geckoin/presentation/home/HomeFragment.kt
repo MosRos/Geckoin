@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.HomeFragmentBinding
 import com.mrostami.geckoin.domain.base.Result
 import com.mrostami.geckoin.model.*
+import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirections
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -49,7 +51,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private var trendsAdapter: TrendCoinsAdapter? = null
 
     private val onTrendCoinClicked: (TrendCoin, Int) -> Unit = { trendCoin, i ->
-        context?.showToast("${trendCoin.name}")
+        if (trendCoin.id != null) {
+            val coinDetailsDirection =
+                CoinDetailsFragmentDirections.actionGlobalCoinDetails(coinId = trendCoin.id)
+            Navigation.findNavController(binding.rootLayout).navigate(coinDetailsDirection)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -348,12 +354,14 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             setValueTextSize(10f)
         }
 
-        bitcoinPriceChart?.data = lineData
-        bitcoinPriceChart?.data?.notifyDataChanged()
-        bitcoinPriceChart?.notifyDataSetChanged()
-        bitcoinPriceChart?.animateX(1000)
-        bitcoinPriceChart?.animateY(700)
-        bitcoinPriceChart?.invalidate()
+        bitcoinPriceChart?.run {
+            data = lineData
+            data?.notifyDataChanged()
+            notifyDataSetChanged()
+            animateX(1000)
+            animateY(700)
+            invalidate()
+        }
     }
 
     private fun initDominancePieChart() {
@@ -459,11 +467,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 //          setValueTypeface(iranSansNum)
         }
 
-        dominancePieChart?.data = data
-        dominancePieChart?.dragDecelerationFrictionCoef = 0.8f
-        dominancePieChart?.animateY(1000, Easing.EaseInOutQuad)
-        dominancePieChart?.data?.notifyDataChanged()
-        dominancePieChart?.notifyDataSetChanged()
-        dominancePieChart?.invalidate()
+        dominancePieChart?.run {
+            this.data = data
+            dragDecelerationFrictionCoef = 0.8f
+            animateY(1000, Easing.EaseInOutQuad)
+            data.notifyDataChanged()
+            notifyDataSetChanged()
+            invalidate()
+        }
     }
 }

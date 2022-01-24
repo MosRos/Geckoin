@@ -79,7 +79,7 @@ abstract class RepositoryResourceAdapter<in P : Any?, T : Any?, U : Any, V : Any
                     }
                 }
             } else {
-                delay(300L)
+                delay(200L)
                 emit(Result.Error(Exception("No internet connection"), message = "No internet connection"))
             }
         }
@@ -144,6 +144,7 @@ abstract class RepositoryAdapter<in P: Any?, T: Any, R: Any>(
                 }
             }
         } else {
+            delay(200)
             emit(Result.Error(Exception("No internet connection"), message = "No internet connection"))
         }
     }.catch { e ->

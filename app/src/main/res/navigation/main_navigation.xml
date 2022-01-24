@@ -30,4 +30,24 @@
         tools:layout="@layout/settings_fragment"
         />
 
+    <action
+        android:id="@+id/action_global_coin_details"
+        app:destination="@id/coin_details"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    <fragment
+        android:id="@+id/coin_details"
+        android:name="com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragment"
+        android:label="@string/coin_details"
+        tools:layout="@layout/coin_details_fragment">
+        <argument
+            android:name="coinId"
+            app:argType="string"
+            android:defaultValue="null"
+            app:nullable="true"
+            />
+    </fragment>
 </navigation>

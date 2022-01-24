@@ -6,6 +6,7 @@ import com.mrostami.geckoin.data.remote.responses.CoinGeckoPingResponse
 import com.mrostami.geckoin.data.remote.responses.PriceChartResponse
 import com.mrostami.geckoin.data.remote.responses.TrendCoinsResponse
 import com.mrostami.geckoin.model.Coin
+import com.mrostami.geckoin.model.CoinDetailResponse
 import com.mrostami.geckoin.model.RankedCoin
 import com.mrostami.geckoin.model.SimplePriceInfoResponse
 import okhttp3.ResponseBody
@@ -63,4 +64,8 @@ class RemoteDataSource @Inject constructor(
 
     override suspend fun getAllCoins(): NetworkResponse<List<Coin>, CoinGeckoApiError> =
         coinGeckoApiService.getAllCoins()
+
+    override suspend fun getCoinDetailsInfo(coinId: String): NetworkResponse<CoinDetailResponse, CoinGeckoApiError> {
+        return coinGeckoApiService.getCoinDetailsInfo(coinId = coinId)
+    }
 }

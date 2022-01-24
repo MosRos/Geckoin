@@ -57,7 +57,6 @@
         <item name="fontFamily">@font/firasans_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_color_primary</item>
-        <item name="android:gravity">center</item>
     </style>
     <style name="TextAppearance.TrendCoinRank" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_medium</item>
