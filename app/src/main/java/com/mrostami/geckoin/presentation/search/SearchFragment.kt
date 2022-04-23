@@ -28,6 +28,10 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
     private val binding: SearchFragmentBinding by viewBinding(SearchFragmentBinding::bind)
     val viewModel: SearchViewModel by viewModels()
 
+    private val DELAY: Long = 650
+    private var searchJob = SupervisorJob()
+    private val searchScope = CoroutineScope(Dispatchers.Main + searchJob)
+
     private var coinsRecycler: RecyclerView? = null
     private var coinsAdapter: CoinsAdapter? = null
     private val onCoinClicked: (Coin) -> Unit = { coin ->
@@ -84,10 +88,6 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
 
     private fun setListeners() {
         binding.searchEdt.addTextChangedListener(object : TextWatcher {
-
-            private val DELAY: Long = 650
-            var searchJob = SupervisorJob()
-            val searchScope = CoroutineScope(Dispatchers.Main + searchJob)
 
             override fun afterTextChanged(p0: Editable?) {
 

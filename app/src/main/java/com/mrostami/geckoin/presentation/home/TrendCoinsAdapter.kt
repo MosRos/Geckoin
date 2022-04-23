@@ -25,7 +25,7 @@ class TrendCoinsAdapter(
             }
 
             override fun areContentsTheSame(oldItem: TrendCoin, newItem: TrendCoin): Boolean {
-                return oldItem.equals(newItem)
+                return oldItem == newItem
             }
         }
     }

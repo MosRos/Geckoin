@@ -14,6 +14,7 @@ import com.mrostami.geckoin.GeckoinApp
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.presentation.utils.AppBarUtils
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
 abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivity() {
@@ -21,7 +22,7 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
     abstract val viewModel: BaseActivityViewModel
     abstract val layoutResId: Int
 
-    private var selectedTheme: Int = GeckoinApp.getInstance().getThemeMode()
+    private var selectedTheme: Int = AppCompatDelegate.getDefaultNightMode() // GeckoinApp.getInstance().getThemeMode()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(selectedTheme)
@@ -43,7 +44,9 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
 
     override fun onStart() {
         super.onStart()
-        viewModel.getThemeMode()
+        lifecycleScope.launch {
+            viewModel.getThemeMode()
+        }
         observeThemeChanges()
     }
 
