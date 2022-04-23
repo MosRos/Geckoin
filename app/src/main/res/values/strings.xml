@@ -4,6 +4,7 @@
     <string name="title_search">Search</string>
     <string name="title_market">Market</string>
     <string name="title_settings">Settings</string>
+    <string name="coin_details">Coin Details</string>
 
     <string name="use_system_theme">Use System Theme</string>
     <string name="theme">Theme</string>

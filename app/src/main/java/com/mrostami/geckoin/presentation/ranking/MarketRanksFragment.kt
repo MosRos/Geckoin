@@ -2,17 +2,15 @@ package com.mrostami.geckoin.presentation.ranking
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.CombinedLoadStates
+import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,15 +18,14 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.MarketRankFragmentBinding
 import com.mrostami.geckoin.domain.base.Result
 import com.mrostami.geckoin.model.RankedCoin
+import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirections
 import com.mrostami.geckoin.presentation.utils.showSnack
 import com.mrostami.geckoin.presentation.utils.showToast
 import com.mrostami.geckoin.presentation.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
@@ -39,27 +36,32 @@ class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
     private var rankRecycler: RecyclerView? = null
     private var marketRanksAdapter: RankedCoinsAdapter? = null
     private val onRankedItemClicked: (RankedCoin, Int) -> Unit = { coin, i ->
-        context?.showToast("clicked ${coin.name} + $i")
+        if (coin.id != null) {
+            val coinDetailsDirection =
+                CoinDetailsFragmentDirections.actionGlobalCoinDetails(coinId = coin.id)
+            Navigation.findNavController(binding.root).navigate(coinDetailsDirection)
+        }
     }
     private val onRanksRetryClicked: () -> Unit = {
         context?.showToast("retry clicked")
     }
     private var ranksLoadingStateAdapter: RanksLoadingStateAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getPagedRankedCoins()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
         setObservers()
+        requestForData()
+    }
+
+    private fun requestForData() {
+        viewModel.getPagedRankedCoins()
     }
 
     private fun setObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.rankedCoinsState.collect { result ->
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
+            viewModel.rankedCoinsState.collectLatest { result ->
                 when (result) {
                     is Result.Success -> {
                         updateRanksAdapter(result.data)
@@ -96,7 +98,8 @@ class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
     }
 
     private fun initWidgets() {
-        ranksLoadingStateAdapter = RanksLoadingStateAdapter(onRanksRetryClicked, viewLifecycleOwner.lifecycleScope)
+        ranksLoadingStateAdapter =
+            RanksLoadingStateAdapter(onRanksRetryClicked, viewLifecycleOwner.lifecycleScope)
         marketRanksAdapter = RankedCoinsAdapter(onRankedItemClicked).apply {
             ranksLoadingStateAdapter?.let {
                 withLoadStateFooter(

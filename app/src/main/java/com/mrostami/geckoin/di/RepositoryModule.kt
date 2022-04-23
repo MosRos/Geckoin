@@ -3,10 +3,7 @@ package com.mrostami.geckoin.di
 import com.mrostami.geckoin.data.local.LocalDataSource
 import com.mrostami.geckoin.data.remote.RemoteDataSource
 import com.mrostami.geckoin.data.repositories.*
-import com.mrostami.geckoin.domain.AllCoinsRepository
-import com.mrostami.geckoin.domain.AppConfigRepository
-import com.mrostami.geckoin.domain.GlobalInfoRepository
-import com.mrostami.geckoin.domain.MarketRanksRepository
+import com.mrostami.geckoin.domain.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,6 +55,24 @@ object RepositoryModule {
     ) : AllCoinsRepository {
         return AllCoinsRepositoryImpl(
             localDataSource = localDataSource,
+            remoteDataSource = remoteDataSource
+        )
+    }
+
+    @Provides
+    fun providePriceHistoryRepository(
+        remoteDataSource: RemoteDataSource
+    ) : PriceHistoryRepository {
+        return PriceHistoryRepositoryImpl(
+            remoteDataSource = remoteDataSource
+        )
+    }
+
+    @Provides
+    fun provideCoinDetailsRepository(
+        remoteDataSource: RemoteDataSource
+    ) : CoinDetailsRepository {
+        return CoinDetailsRepositoryImpl(
             remoteDataSource = remoteDataSource
         )
     }

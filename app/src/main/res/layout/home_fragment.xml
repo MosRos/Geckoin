@@ -47,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="@id/endGuide"
             app:layout_constraintStart_toStartOf="@id/startGuide"
             app:layout_constraintTop_toTopOf="@id/topGuide"
-            app:layout_constraintDimensionRatio="H,4:3"
+            app:layout_constraintDimensionRatio="@string/chart_card_aspect_ration"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -168,7 +168,7 @@
             app:layout_constraintEnd_toEndOf="@id/endGuide"
             app:layout_constraintStart_toStartOf="@id/startGuide"
             app:layout_constraintTop_toBottomOf="@id/bitcoinInfoCard"
-            app:layout_constraintDimensionRatio="H,4:3"
+            app:layout_constraintDimensionRatio="@string/chart_card_aspect_ration"
             android:layout_marginTop="@dimen/margin_medium"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">

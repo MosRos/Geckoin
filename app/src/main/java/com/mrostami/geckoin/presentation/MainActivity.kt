@@ -83,7 +83,15 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 txtPageTitle?.text = destination.label.toString()
             }
 
-            appBarLayout?.isVisible = destination.id != R.id.navigation_search
+            appBarLayout?.isVisible = when(destination.id) {
+                R.id.navigation_search -> false
+                R.id.coin_details -> false
+                else -> true
+            }
+            bottomNav?.isVisible = when(destination.id) {
+                R.id.coin_details -> false
+                else -> true
+            }
         }
     }
 

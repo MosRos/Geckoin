@@ -1,16 +1,13 @@
 package com.mrostami.geckoin.model
 
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class SimplePriceInfo(
     @SerializedName("last_updated_at")
-    val lastUpdatedAt: Int?,
+    val lastUpdatedAt: Long?,
     @SerializedName("usd")
-    val usd: Int?,
+    val usd: Double?,
     @SerializedName("usd_24h_change")
     val usd24hChange: Double?,
     @SerializedName("usd_24h_vol")

@@ -7,12 +7,12 @@
         <item name="cardBackgroundColor">?attr/colorSurface</item>
     </style>
     <style name="Widget.AS.Toolbar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
-        <item name="android:background">?attr/colorSurface</item>
+        <item name="android:background">?attr/backgroundColor</item>
         <item name="elevation">8dp</item>
     </style>
 
     <style name="Widget.AS.AppBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="android:background">?attr/colorSurface</item>
+        <item name="android:background">?attr/backgroundColor</item>
         <item name="elevation">@dimen/app_bar_elevation</item>
         <item name="android:elevation">@dimen/app_bar_elevation</item>
     </style>
@@ -57,7 +57,6 @@
         <item name="fontFamily">@font/firasans_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_color_primary</item>
-        <item name="android:gravity">center</item>
     </style>
     <style name="TextAppearance.TrendCoinRank" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/firasans_medium</item>
@@ -66,8 +65,8 @@
         <item name="android:gravity">center</item>
     </style>
     <style name="Widget.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="android:background">@color/color_surface</item>
-        <item name="backgroundColor">@color/color_surface</item>
+        <item name="android:background">@color/color_background</item>
+        <item name="backgroundColor">@color/color_background</item>
         <item name="itemIconTint">@drawable/selector_bottom_nav</item>
         <item name="itemTextColor">@drawable/selector_bottom_nav</item>
         <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavSelected</item>

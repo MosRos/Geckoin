@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="chart_card_aspect_ration">H,4:3</string>
+
     <dimen name="margin_small">8dp</dimen>
-    <dimen name="margin_normal">12dp</dimen>
-    <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
     <dimen name="margin_large">24dp</dimen>
     <dimen name="padding_small">4dp</dimen>
     <dimen name="padding_normal">8dp</dimen>
@@ -12,7 +15,7 @@
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="card_Stroke_width">1dp</dimen>
     <dimen name="dialog_corner_radius">10dp</dimen>
-    <dimen name="app_bar_elevation">2dp</dimen>
+    <dimen name="app_bar_elevation">1dp</dimen>
     <dimen name="bottom_nav_elevation">2dp</dimen>
 
     <dimen name="text_size_headline_3">20sp</dimen>

@@ -111,7 +111,7 @@ class GlobalInfoRepositoryImpl @Inject constructor(
     override fun getBtcDailyPriceInfo(forceRefresh: Boolean): Flow<Result<BitcoinPriceInfo>> {
         val result =
             object :
-                RepositoryResourceAdapter<Any, BitcoinPriceInfo, SimplePriceInfoResponse, CoinGeckoApiError>(
+                RepositoryResourceAdapter<Any, BitcoinPriceInfo, BitcoinSimplePriceInfoResponse, CoinGeckoApiError>(
                     rateLimiter = DEFAULT_RATE_LIMIT,
                     forceRefresh = forceRefresh
                 ) {
@@ -133,12 +133,12 @@ class GlobalInfoRepositoryImpl @Inject constructor(
                     return forceRefresh || trigger > rateLimiter
                 }
 
-                override suspend fun getFromApi(): NetworkResponse<SimplePriceInfoResponse, CoinGeckoApiError> {
+                override suspend fun getFromApi(): NetworkResponse<BitcoinSimplePriceInfoResponse, CoinGeckoApiError> {
                     btcPriceLRT = System.currentTimeMillis()
-                    return remoteDataSource.getSimplePrice()
+                    return remoteDataSource.getBitcoinSimplePrice()
                 }
 
-                override suspend fun persistData(apiData: SimplePriceInfoResponse) {
+                override suspend fun persistData(apiData: BitcoinSimplePriceInfoResponse) {
                     withContext(Dispatchers.IO) {
                         apiData.bitcoin?.let { btc ->
                             localDataSource.putBtcPriceInfo(info = BitcoinPriceInfo(

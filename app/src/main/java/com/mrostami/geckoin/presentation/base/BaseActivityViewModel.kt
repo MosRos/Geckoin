@@ -20,6 +20,7 @@ abstract class BaseActivityViewModel constructor(
     fun getThemeMode() {
         viewModelScope.launch {
             themeConfigUseCase.getThemeMode().collectLatest { mode ->
+                AppCompatDelegate.setDefaultNightMode(mode)
                 if (selectedThemeMode != mode) {
                     selectedThemeMode = mode
                     _appThemeChanged.send(true)
