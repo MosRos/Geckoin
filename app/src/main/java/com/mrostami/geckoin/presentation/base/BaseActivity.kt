@@ -1,28 +1,24 @@
 package com.mrostami.geckoin.presentation.base
 
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.Window
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
-import com.mrostami.geckoin.GeckoinApp
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.presentation.utils.AppBarUtils
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivity() {
+abstract class BaseActivity<V : BaseActivityViewModel> : AppCompatActivity() {
 
-    abstract val viewModel: BaseActivityViewModel
+    abstract val viewModel: V
     abstract val layoutResId: Int
 
-    private var selectedTheme: Int = AppCompatDelegate.getDefaultNightMode() // GeckoinApp.getInstance().getThemeMode()
+    private var selectedTheme: Int = AppCompatDelegate.getDefaultNightMode()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(selectedTheme)
@@ -45,7 +41,7 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
     override fun onStart() {
         super.onStart()
         lifecycleScope.launch {
-            viewModel.getThemeMode()
+//            viewModel.getThemeMode()
         }
         observeThemeChanges()
     }
@@ -58,7 +54,7 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
     }
 
     private fun observeThemeChanges() {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchWhenCreated {
             viewModel.appThemeChanged.collect { changed ->
                 selectedTheme = viewModel.selectedThemeMode
                 if (changed) {
@@ -69,12 +65,6 @@ abstract class BaseActivity<viewModel : BaseActivityViewModel> : AppCompatActivi
     }
 
     private fun applyTheme() {
-//        val restartIntent = Intent.makeRestartActivityTask(intent.component).apply {
-//        }
-//        startActivity(restartIntent)
-//        configTransition()
-
-//
         configTransition()
         recreate()
         configTransition()

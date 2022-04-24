@@ -1,20 +1,20 @@
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-        maven { url = uri("https://maven.google.com") }
-        maven { url = uri("https://jcenter.bintray.com") }
-        maven { url = uri("https://jitpack.io") }
-        maven {
-            url "http://dl.bintray.com/mobisystech/maven"
-            allowInsecureProtocol = true
-        }
-        maven {
-            url "https://pkgs.dev.azure.com/motiontag/releases/_packaging/releases/maven/v1"
-        }
-    }
-}
+//dependencyResolutionManagement {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//    repositories {
+//        google()
+//        mavenCentral()
+//        jcenter() // Warning: this repository is going to shut down soon
+//        maven { url = uri("https://maven.google.com") }
+//        maven { url = uri("https://jcenter.bintray.com") }
+//        maven { url = uri("https://jitpack.io") }
+//        maven {
+//            url "http://dl.bintray.com/mobisystech/maven"
+//            allowInsecureProtocol = true
+//        }
+//        maven {
+//            url "https://pkgs.dev.azure.com/motiontag/releases/_packaging/releases/maven/v1"
+//        }
+//    }
+//}
 rootProject.name = "Geckoin"
 include ':app'

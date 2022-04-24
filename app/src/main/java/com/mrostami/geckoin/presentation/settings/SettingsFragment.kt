@@ -15,6 +15,7 @@ import coil.transform.CircleCropTransformation
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.SettingsFragmentBinding
+import com.mrostami.geckoin.presentation.utils.openLinkInBrowser
 import com.mrostami.geckoin.presentation.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -62,6 +63,14 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             menuThemeSetting.rootLayout?.setOnClickListener {
                 showThemeDialog()
             }
+
+            menuAbout.rootLayout?.setOnClickListener {
+                showAboutDialog()
+            }
+
+            menuDeveloper.rootLayout?.setOnClickListener {
+                showDeveloperDialog()
+            }
         }
     }
 
@@ -103,6 +112,37 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             themeDialog = themeDialogBuilder?.create()
         }
 
+    }
+
+    private fun showAboutDialog(){
+        context?.let { ctx ->
+            val aboutDialog = MaterialAlertDialogBuilder(ctx, R.style.AppTheme_AlertDialogTheme)
+                .setTitle(R.string.about)
+                .setMessage(R.string.about_info)
+                .setCancelable(true)
+                .setNeutralButton(R.string.ok) { dialogInterface: DialogInterface?, i: Int ->
+                    dialogInterface?.dismiss()
+                }
+                .create()
+                .show()
+        }
+    }
+
+    private fun showDeveloperDialog() {
+        context?.let { ctx ->
+            val developerDialog = MaterialAlertDialogBuilder(ctx, R.style.AppTheme_AlertDialogTheme)
+                .setTitle(R.string.developer)
+                .setMessage(R.string.developer_info)
+                .setCancelable(true)
+                .setPositiveButton(R.string.open_linkedin){dialogInterface: DialogInterface?, i: Int ->
+                    openLinkInBrowser(ctx, "https://www.linkedin.com/in/moslem-rostami-aa3929165/")
+                }
+                .setNeutralButton(R.string.ok) { dialogInterface: DialogInterface?, i: Int ->
+                    dialogInterface?.dismiss()
+                }
+                .create()
+                .show()
+        }
     }
 
     private fun getCheckedItemPosition(): Int {

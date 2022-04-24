@@ -13,13 +13,11 @@ class AppConfigRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : AppConfigRepository {
 
-    override fun changeTheme(mode: Int) {
-        GlobalScope.launch {
-            localDataSource.changeTheme(mode)
-        }
+    override suspend fun changeTheme(mode: Int) {
+        localDataSource.changeTheme(mode)
     }
 
-    override fun getThemeMode(): Flow<Int> {
+    override suspend fun getThemeMode(): Flow<Int> {
         return flow {
             emitAll(localDataSource.getThemeMode())
         }

@@ -32,15 +32,15 @@ buildscript {
     }
 }
 
-//allprojects {
-//    repositories {
-//        google()
-//        mavenCentral()
-//        maven { url "https://maven.google.com" }
-//        maven { url "https://jcenter.bintray.com" }
-//        maven { url 'https://jitpack.io' }
-//    }
-//}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
+        maven { url "https://jcenter.bintray.com" }
+        maven { url 'https://jitpack.io' }
+    }
+}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

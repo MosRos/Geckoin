@@ -7,6 +7,6 @@ import javax.inject.Inject
 class ThemeConfigUseCase @Inject constructor(
     private val appConfigRepository: AppConfigRepository
 ) {
-    fun getThemeMode() : Flow<Int> = appConfigRepository.getThemeMode()
-    fun changeTheme(mode: Int) = appConfigRepository.changeTheme(mode)
+    suspend fun getThemeMode() : Flow<Int> = appConfigRepository.getThemeMode()
+    suspend fun changeTheme(mode: Int) = appConfigRepository.changeTheme(mode)
 }
