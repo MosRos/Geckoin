@@ -29,6 +29,7 @@ class GeckoinApp : Application(), Configuration.Provider {
     }
 
     // workerFactory initialized in app Manifest with a provider
+    @Inject lateinit var preferencesHelper: PreferencesHelper
     @Inject lateinit var workerFactory: HiltWorkerFactory
 
     override fun getWorkManagerConfiguration(): Configuration {
@@ -59,7 +60,7 @@ class GeckoinApp : Application(), Configuration.Provider {
     }
 
     fun initAppConfig() {
-        AppCompatDelegate.setDefaultNightMode(DEFAULT_THEME_MODE)
+        AppCompatDelegate.setDefaultNightMode(preferencesHelper.selectedThemeMode)
     }
 
     private fun initSyncWorker(context: Application) {

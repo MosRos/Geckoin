@@ -21,7 +21,8 @@ class MarketRanksRepositoryImpl @Inject constructor(
     private val marketRanksMediator: MarketRanksMediator
 ) : MarketRanksRepository {
 
-    @ExperimentalPagingApi
+
+    @OptIn(ExperimentalPagingApi::class)
     override fun getRanks(): Flow<PagingData<RankedCoin>> {
 
         val pagingSourceFactory = { localDataSource.getPagedRankedCoins() }

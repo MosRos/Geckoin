@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    themeConfigUseCase: ThemeConfigUseCase
+    private val themeConfigUseCase: ThemeConfigUseCase
 ) : BaseActivityViewModel(themeConfigUseCase) {
 
     val fragName: MutableLiveData<String> = MutableLiveData("Home")
