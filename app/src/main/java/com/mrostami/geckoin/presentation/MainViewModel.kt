@@ -12,5 +12,4 @@ class MainViewModel @Inject constructor(
 ) : BaseActivityViewModel(themeConfigUseCase) {
 
     val fragName: MutableLiveData<String> = MutableLiveData("Home")
-
 }

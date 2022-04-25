@@ -9,6 +9,7 @@ import com.mrostami.geckoin.model.RankedCoin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,9 +19,8 @@ class CoinRankViewModel @Inject constructor(
     private val cryptoRanksUseCase: MarketRanksUseCase
 ) : ViewModel() {
 
-    val rankedCoinsState: MutableStateFlow<Result<PagingData<RankedCoin>>> =
-        MutableStateFlow(Result.Empty)
-
+    private val rankedCoinsState: MutableStateFlow<Result<PagingData<RankedCoin>>> = MutableStateFlow(Result.Empty)
+    val rankedCoinsStateFlow: StateFlow<Result<PagingData<RankedCoin>>> = rankedCoinsState
     fun getPagedRankedCoins(refresh: Boolean = false) {
         viewModelScope.launch {
             val result = cryptoRanksUseCase.invoke(
