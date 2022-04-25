@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
  */
 class FlowEventBus {
     private val _events = MutableSharedFlow<Any>() // no buffer, rendezvous with subscribers
-    public val events: Flow<Any> get() = _events // expose as a plain flow
+    val events: Flow<Any> get() = _events // expose as a plain flow
 
     suspend fun produceEvent(event: Any) {
         _events.emit(event) // suspends until all subscribers receive it
