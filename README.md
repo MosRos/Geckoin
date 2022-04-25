@@ -11,17 +11,19 @@ In this sample project I tried to develop a standard and modern android app with
 
 ### Features
 * Kotlin
-* Clean Architecture: Keep In mind, clean architecture starts from domain layer by implementing business logic(data models and abstract repository interfaces). so domain layer says to data layer what it should do and also domain layer provides proper data for UI layer.
-* Offline-First with Repository Pattern: This pattern act on data layer. Repository Pattern Wraps around those data that provide by "BOTH network and Database". If your data provides only by network or only by database you can omit repository and do relavant tasks in UseCase.
-* MVVM Design Pattern: this design act on Presentation layer, no problem with configuration changes :)
-* View Binding: I prefered viewbinding over databinding because of code rigidity and an easeir path to migrate to jetpack compose.
-* Kotlin Coroutines and Kotlin Flow for concurrency, observer patten and data streaming.
+* Clean Architecture MVVM Design Pattern
+* Offline-First with Repository Pattern
+* Kotlin Coroutines & Flows for concurrency, observer patten and data streaming.
+* ViewBinding: I prefered viewbinding over databinding because of code rigidity and an easeir path to migrate to jetpack compose.
 * Room and DataStore For Data Persistence and caching. 
-* Dagger Hilt: for Dependency injection. 
-* WorkManager: for background task and syncing coins database.
-* Paging 3.0: for pagination and endless list. 
-* Dark Mode and Material design
-* Network Response Adapter for handling and wrapping different api response types (https://github.com/haroldadmin/NetworkResponseAdapter).
+* Dagger Hilt for Dependency injection. 
+* WorkManager for background task and syncing coins database.
+* Paging 3.0: for pagination with offline support. 
+* Light/Dark Mode and Material design
+* OkHttp and Retrofit with coroutines for networking
+* MPAndroidCharts for charts
+* Coil for image loading
+* Network Response Adapter for handling different api response types (https://github.com/haroldadmin/NetworkResponseAdapter).
 * CoinGecko Free Api: All data provided by coingecko public api (https://www.coingecko.com/en)
 
 ***video shot link***: https://youtube.com/shorts/pl28XA9hnvE?feature=share
