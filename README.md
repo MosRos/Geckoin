@@ -3,9 +3,9 @@ Geckoin is a cryptocurrency simple app for basic market info, top coins list and
 In this sample project I tried to develop a standard and modern android app with best practices and some the most useful jetpack components.  
 
 <p float="left">
-<img src="screenshots/home_dark.jpg" width="30%"/>
-<img src="screenshots/home_light.jpg" width="30%"/>
-<img src="screenshots/search_light.jpg" width="30%"/>
+<img src="screenshots/1_dark_screen_home.jpg" width="30%"/>
+<img src="screenshots/2_dark_screen_list.jpg" width="30%"/>
+<img src="screenshots/3_dark_screen_search.jpg" width="30%"/>
 </p>
 
 
@@ -23,4 +23,9 @@ In this sample project I tried to develop a standard and modern android app with
 * Dark Mode and Material design
 * Network Response Adapter for handling and wrapping different api response types (https://github.com/haroldadmin/NetworkResponseAdapter).
 * CoinGecko Free Api: All data provided by coingecko public api (https://www.coingecko.com/en)
+
+***video shot link***: https://youtube.com/shorts/pl28XA9hnvE?feature=share
+
+<!-- [![work doesn't happen at work](http://i.imgur.com/ASYsjjX.png)](https://youtube.com/shorts/pl28XA9hnvE "Geckoin Preview - Click to Watch!")
+https://youtu.be/pl28XA9hnvE?t=2 -->
 
