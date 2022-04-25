@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -21,6 +22,7 @@ import com.mrostami.geckoin.presentation.base.BaseActivity
 import com.mrostami.geckoin.presentation.base.BaseActivityViewModel
 import com.mrostami.geckoin.workers.SyncCoinsWorker
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint

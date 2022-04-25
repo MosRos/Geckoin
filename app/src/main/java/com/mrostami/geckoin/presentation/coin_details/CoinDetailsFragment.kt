@@ -6,7 +6,9 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -21,8 +23,8 @@ import com.mrostami.geckoin.presentation.price_chart.PriceChartFragment
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CoinDetailsFragment : Fragment(R.layout.coin_details_fragment) {
@@ -55,48 +57,55 @@ class CoinDetailsFragment : Fragment(R.layout.coin_details_fragment) {
     }
 
     private fun setObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.coinInfoState.collect { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        delay(500)
-                        binding.topProgress.isVisible = true
-                    }
-                    is Result.Error -> {
-                        binding.topProgress.isVisible = false
-                        result.message?.let { msg ->
-                            context?.showToast(message = msg)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                // collect coin info
+                launch {
+                    viewModel.coinInfoStateFlow.collect { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                delay(500)
+                                binding.topProgress.isVisible = true
+                            }
+                            is Result.Error -> {
+                                binding.topProgress.isVisible = false
+                                result.message?.let { msg ->
+                                    context?.showToast(message = msg)
+                                }
+                            }
+                            is Result.Success -> {
+                                binding.topProgress.isVisible = false
+                                updateCoinInfo(result.data)
+                            }
+                            is Result.Empty -> {
+                                binding.topProgress.isVisible = false
+                            }
                         }
-                    }
-                    is Result.Success -> {
-                        binding.topProgress.isVisible = false
-                        updateCoinInfo(result.data)
-                    }
-                    is Result.Empty -> {
-                        binding.topProgress.isVisible = false
                     }
                 }
-            }
-        }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.simplePriceInfoState.collectLatest { result ->
-                when (result) {
-                    is Result.Loading -> {
-                        delay(500)
-                    }
-                    is Result.Error -> {
+                // collect price chart info
+                launch {
+                    viewModel.simplePriceInfoStateFlow.collectLatest { result ->
+                        when (result) {
+                            is Result.Loading -> {
+                                delay(500)
+                            }
+                            is Result.Error -> {
 //                        binding.topProgress.isVisible = false
-                        result.message?.let { msg ->
-                            context?.showToast(message = msg)
+                                result.message?.let { msg ->
+                                    context?.showToast(message = msg)
+                                }
+                            }
+                            is Result.Success -> {
+//                        binding.topProgress.isVisible = false
+                                updatePriceInfo(result.data)
+                            }
+                            is Result.Empty -> {
+//                        binding.topProgress.isVisible = false
+                            }
                         }
-                    }
-                    is Result.Success -> {
-//                        binding.topProgress.isVisible = false
-                        updatePriceInfo(result.data)
-                    }
-                    is Result.Empty -> {
-//                        binding.topProgress.isVisible = false
                     }
                 }
             }

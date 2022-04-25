@@ -10,7 +10,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -26,9 +28,8 @@ import com.mrostami.geckoin.model.PriceEntry
 import com.mrostami.geckoin.presentation.utils.showToast
 import com.mrostami.geckoin.presentation.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -45,7 +46,7 @@ class PriceChartFragment() : Fragment(R.layout.price_chart_fragment) {
 
     companion object {
         const val FRAG_TAG = "coin_price_chart_fragment"
-        fun newInstance(coinId: String) : PriceChartFragment {
+        fun newInstance(coinId: String): PriceChartFragment {
             return PriceChartFragment(coinId)
         }
     }
@@ -63,26 +64,29 @@ class PriceChartFragment() : Fragment(R.layout.price_chart_fragment) {
     }
 
     private fun setObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.priceChartInfoState.collectLatest { result ->
-                when (result) {
-                    is Result.Empty -> {
-                        binding.progressBar.isVisible = false
-                    }
-                    is Result.Success -> {
-                        binding.progressBar.isVisible = false
-                        updateBtcPriceChart(result.data)
-                    }
-                    is Result.Error -> {
-                        binding.progressBar.isVisible = false
-                        Timber.e("Price Chart Error: ${result.message}")
-                        context?.showToast(
-                            message = "Error getting Price Chart info: ${result.message}",
-                            length = Toast.LENGTH_SHORT
-                        )
-                    }
-                    is Result.Loading -> {
-                        binding.progressBar.isVisible = true
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                viewModel.priceChartInfoStateFlow.collectLatest { result ->
+                    when (result) {
+                        is Result.Empty -> {
+                            binding.progressBar.isVisible = false
+                        }
+                        is Result.Success -> {
+                            binding.progressBar.isVisible = false
+                            updateBtcPriceChart(result.data)
+                        }
+                        is Result.Error -> {
+                            binding.progressBar.isVisible = false
+                            Timber.e("Price Chart Error: ${result.message}")
+                            context?.showToast(
+                                message = "Error getting Price Chart info: ${result.message}",
+                                length = Toast.LENGTH_SHORT
+                            )
+                        }
+                        is Result.Loading -> {
+                            binding.progressBar.isVisible = true
+                        }
                     }
                 }
             }
