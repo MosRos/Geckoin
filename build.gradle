@@ -1,18 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
 
-    ext.kotlin_version = '1.5.31'
-    ext.nav_version = '2.3.5'
+    ext.kotlin_version = '1.6.10'
+    ext.nav_version = '2.4.2'
     ext.hilt_version = '2.40.1'
 
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven { url = uri("https://maven.google.com") }
+        maven { url = uri("https://jcenter.bintray.com") }
+        maven { url = uri("https://jitpack.io") }
         maven {
-            url "http://dl.bintray.com/mobisystech/maven"
-            allowInsecureProtocol = true
+            url = uri("https://mvnrepository.com/artifact/com.android.tools.lint/lint-gradle-api")
         }
+//        maven {
+//            url "http://dl.bintray.com/mobisystech/maven"
+//            allowInsecureProtocol = true
+//        }
     }
 
     dependencies {
@@ -21,6 +26,19 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
 
+        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.0'
+
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
+        maven { url "https://jcenter.bintray.com" }
+        maven { url 'https://jitpack.io' }
     }
 }
 

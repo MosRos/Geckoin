@@ -7,12 +7,17 @@ import com.mrostami.geckoin.domain.usecases.BitcoinChartInfoUseCase
 import com.mrostami.geckoin.domain.usecases.BitcoinSimplePriceUseCase
 import com.mrostami.geckoin.domain.usecases.GlobalMarketInfoUseCase
 import com.mrostami.geckoin.domain.usecases.TrendCoinsUseCase
-import com.mrostami.geckoin.model.*
+import com.mrostami.geckoin.model.BitcoinPriceInfo
+import com.mrostami.geckoin.model.GlobalMarketInfo
+import com.mrostami.geckoin.model.PriceEntry
+import com.mrostami.geckoin.model.TrendCoin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +38,7 @@ class HomeViewModel @Inject constructor(
 
     val bitcoinChartInfoState: MutableStateFlow<Result<List<PriceEntry>>> = MutableStateFlow(Result.Empty)
     fun getBitcoinChartInfo(forceRefresh: Boolean = false) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch( Dispatchers.IO) {
             val result = bitcoinChartInfoUseCase.invoke(forceRefresh = forceRefresh)
             bitcoinChartInfoState.emitAll(result)
         }

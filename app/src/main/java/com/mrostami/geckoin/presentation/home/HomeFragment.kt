@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ import com.mrostami.geckoin.R
 import com.mrostami.geckoin.databinding.HomeFragmentBinding
 import com.mrostami.geckoin.domain.base.Result
 import com.mrostami.geckoin.model.*
+import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirections
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -45,25 +47,28 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private var bitcoinPriceChart: LineChart? = null
     private var dominancePieChart: PieChart? = null
     private var trendCoinsRecycler: RecyclerView? = null
-
-    private val onTrendCoinClicked: (TrendCoin, Int) -> Unit = { trendCoin, i ->
-        context?.showToast("${trendCoin.name}")
-    }
-    private var trendsRecycler: RecyclerView? = null
     private var trendsAdapter: TrendCoinsAdapter? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getBitcoinPriceInfo(forceRefresh = true)
-        viewModel.getBitcoinChartInfo(forceRefresh = true)
-        viewModel.getGlobalInfo(forceRefresh = true)
-        viewModel.getTrendCoins(forceRefresh = true)
+    private val onTrendCoinClicked: (TrendCoin, Int) -> Unit = { trendCoin, i ->
+        if (trendCoin.id != null) {
+            val coinDetailsDirection =
+                CoinDetailsFragmentDirections.actionGlobalCoinDetails(coinId = trendCoin.id)
+            Navigation.findNavController(binding.rootLayout).navigate(coinDetailsDirection)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registerWidgets()
         setObservables()
+        requestForData()
+    }
+
+    private fun requestForData() {
+        viewModel.getBitcoinPriceInfo()
+        viewModel.getBitcoinChartInfo()
+        viewModel.getGlobalInfo()
+        viewModel.getTrendCoins()
     }
 
     private fun registerWidgets() {
@@ -91,11 +96,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
 //                        binding.progressBar.isVisible = false
                         Timber.e("Bitcoin Price Info Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error getting Bitcoin info: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error getting Bitcoin info: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
 //                        binding.progressBar.isVisible = true
@@ -117,11 +121,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
                         binding.bitcoinProgressBar.isVisible = false
                         Timber.e("Bitcoin Chart Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error getting Bitcoin Chart info: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error getting Bitcoin Chart info: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
                         binding.bitcoinProgressBar.isVisible = true
@@ -143,11 +146,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
                         binding.dominanceProgressBar.isVisible = false
                         Timber.e("Global Info Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error getting global info: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error getting global info: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
                         binding.dominanceProgressBar.isVisible = true
@@ -169,11 +171,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     is Result.Error -> {
                         binding.trendCoinsProgressBar.isVisible = false
                         Timber.e("TrendCoins Error: ${result.message}")
-                        Toast.makeText(
-                            requireContext(),
-                            "Error Getting Trend coins: ${result.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        context?.showToast(
+                            message = "Error Getting Trend coins: ${result.message}",
+                            length = Toast.LENGTH_SHORT
+                        )
                     }
                     is Result.Loading -> {
                         binding.trendCoinsProgressBar.isVisible = true
@@ -216,33 +217,32 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun updateBitcoinPriceInfo(priceInfo: BitcoinPriceInfo) {
         val changePercentage: Double = priceInfo.info.usd24hChange ?: 0.0
-        val price: Int = priceInfo.info.usd ?: 0
+        val price: Double = priceInfo.info.usd ?: 0.0
         val vol: Long = priceInfo.info.usd24hVol?.toLong() ?: 0L
         val cap: Long = priceInfo.info.usdMarketCap?.toLong() ?: 0L
         with(binding) {
             imgBitcoin.load(R.drawable.bitcoin_logo)
-            txtBtcPrice.text = "$ " + price.decimalFormat()
+            txtBtcPrice.text = "$ " + price.toReadablePrice()
             txtPricePercentChange.text = changePercentage.round(decimals = 2).toString() + "%"
+            txtPricePercentChange.applyPriceStateTextColor(changePercentage)
             txtBtc24hVol.text = "vol: " + vol.decimalFormat()
             txtBtc24hCap.text = "cap: " + cap.decimalFormat()
         }
-        applyMarketStateColor(changePercentage)
+        setUpOrDownIcon(changePercentage)
     }
 
-    private fun applyMarketStateColor(change: Double) {
-        val red: Int = context?.getColour(R.color.down_red) ?: Color.parseColor("#D32F2F")
-        val green: Int = context?.getColour(R.color.up_green) ?: Color.parseColor("#00796B")
-
-        when {
-            change > 0 -> {
-                binding.txtPricePercentChange.setTextColor(green)
-                binding.imgUpDown.imageTintList = ColorStateList.valueOf(green)
-                binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_up)
-            }
-            change < 0 -> {
-                binding.txtPricePercentChange.setTextColor(red)
-                binding.imgUpDown.imageTintList = ColorStateList.valueOf(red)
-                binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_down)
+    private fun setUpOrDownIcon(change: Double) {
+        val upOrDownColor: Int? = context?.getUpOrDownColor(change)
+        if (upOrDownColor != null) {
+            when {
+                change > 0 -> {
+                    binding.imgUpDown.imageTintList = ColorStateList.valueOf(upOrDownColor)
+                    binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_up)
+                }
+                change < 0 -> {
+                    binding.imgUpDown.imageTintList = ColorStateList.valueOf(upOrDownColor)
+                    binding.imgUpDown.setImageResource(R.drawable.ic_arrow_drop_down)
+                }
             }
         }
     }
@@ -352,12 +352,14 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             setValueTextSize(10f)
         }
 
-        bitcoinPriceChart?.data = lineData
-        bitcoinPriceChart?.data?.notifyDataChanged()
-        bitcoinPriceChart?.notifyDataSetChanged()
-        bitcoinPriceChart?.animateX(1000)
-        bitcoinPriceChart?.animateY(700)
-        bitcoinPriceChart?.invalidate()
+        bitcoinPriceChart?.run {
+            data = lineData
+            data?.notifyDataChanged()
+            notifyDataSetChanged()
+            animateX(1000)
+            animateY(700)
+            invalidate()
+        }
     }
 
     private fun initDominancePieChart() {
@@ -394,7 +396,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 isEnabled = false
             }
             data = PieData(
-                    PieDataSet(listOf(PieEntry(0f, 0f)), "")
+                PieDataSet(listOf(PieEntry(0f, 0f)), "")
             )
         }
     }
@@ -463,11 +465,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 //          setValueTypeface(iranSansNum)
         }
 
-        dominancePieChart?.data = data
-        dominancePieChart?.dragDecelerationFrictionCoef = 0.8f
-        dominancePieChart?.animateY(1000, Easing.EaseInOutQuad)
-        dominancePieChart?.data?.notifyDataChanged()
-        dominancePieChart?.notifyDataSetChanged()
-        dominancePieChart?.invalidate()
+        dominancePieChart?.run {
+            this.data = data
+            dragDecelerationFrictionCoef = 0.8f
+            animateY(1000, Easing.EaseInOutQuad)
+            data.notifyDataChanged()
+            notifyDataSetChanged()
+            invalidate()
+        }
     }
 }

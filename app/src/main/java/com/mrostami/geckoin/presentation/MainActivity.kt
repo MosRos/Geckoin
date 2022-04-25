@@ -26,13 +26,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel>() {
 
-    val mainViewModel: MainViewModel by viewModels<MainViewModel>()
-    override val viewModel: BaseActivityViewModel
-        get() = mainViewModel
-    override val layoutResId: Int
-        get() = R.layout.main_activity
+//    private val mainViewModel: MainViewModel by viewModels<MainViewModel>()
+    override val viewModel: MainViewModel by viewModels<MainViewModel>()
+    override val layoutResId: Int = R.layout.main_activity
 
-//    private lateinit var viewBinding: MainActivityBinding
     private var navController: NavController? = null
     private var appBarLayout: AppBarLayout? = null
     private var bottomNav: BottomNavigationView? = null
@@ -79,11 +76,19 @@ class MainActivity : BaseActivity<MainViewModel>() {
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.label != null) {
-                mainViewModel.fragName.postValue(destination.label.toString())
+                viewModel.fragName.postValue(destination.label.toString())
                 txtPageTitle?.text = destination.label.toString()
             }
 
-            appBarLayout?.isVisible = destination.id != R.id.navigation_search
+            appBarLayout?.isVisible = when(destination.id) {
+                R.id.navigation_search -> false
+                R.id.coin_details -> false
+                else -> true
+            }
+            bottomNav?.isVisible = when(destination.id) {
+                R.id.coin_details -> false
+                else -> true
+            }
         }
     }
 

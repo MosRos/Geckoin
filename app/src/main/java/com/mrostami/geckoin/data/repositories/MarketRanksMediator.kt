@@ -47,8 +47,11 @@ class MarketRanksMediator @Inject constructor(
             }
             LoadType.PREPEND -> {
                 val remoteKeys: CoinsRemoteKeys? = getRemoteKeyForFirstItem(state)
-                    ?:
-                    throw InvalidObjectException("Remote key and the prevKey should not be null")
+
+//                if (remoteKeys?.prevKey == null) {
+////                    throw InvalidObjectException("Remote key and the prevKey should not be null")
+//                }
+
                 val prevKey = remoteKeys?.prevKey ?: return MediatorResult.Success(
                     endOfPaginationReached = true
                 )

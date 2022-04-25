@@ -20,16 +20,17 @@ class GeckoinApp : Application(), Configuration.Provider {
 
     companion object {
         const val DEFAULT_THEME_MODE: Int = AppCompatDelegate.MODE_NIGHT_NO
-        private lateinit var instance: GeckoinApp
-        private set
 
+        private lateinit var instance: GeckoinApp
+            private set
         fun getInstance() : GeckoinApp {
             return instance
         }
     }
 
+    // workerFactory initialized in app Manifest with a provider
+    @Inject lateinit var preferencesHelper: PreferencesHelper
     @Inject lateinit var workerFactory: HiltWorkerFactory
-    @Inject lateinit var preferenceHelper: PreferencesHelper
 
     override fun getWorkManagerConfiguration(): Configuration {
         return if (BuildConfig.DEBUG) {
@@ -59,11 +60,7 @@ class GeckoinApp : Application(), Configuration.Provider {
     }
 
     fun initAppConfig() {
-        AppCompatDelegate.setDefaultNightMode(DEFAULT_THEME_MODE)
-    }
-
-    fun getThemeMode() : Int {
-        return preferenceHelper.selectedThemeMode
+        AppCompatDelegate.setDefaultNightMode(preferencesHelper.selectedThemeMode)
     }
 
     private fun initSyncWorker(context: Application) {

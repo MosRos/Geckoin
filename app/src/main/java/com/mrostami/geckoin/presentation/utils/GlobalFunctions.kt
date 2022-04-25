@@ -6,6 +6,7 @@ import android.net.Uri
 import android.util.TypedValue
 import com.mrostami.geckoin.GeckoinApp
 
+
 fun dpToPx(dp: Float) =
     TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_DIP,

@@ -1,5 +1,6 @@
 package com.mrostami.geckoin.data.local
 
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.paging.PagingSource
 import com.mrostami.geckoin.data.local.dao.*
 import com.mrostami.geckoin.data.local.preferences.DataStoreHelper
@@ -21,11 +22,13 @@ class LocalDataSource @Inject constructor(
 
     // Preferences setter and getter
     override suspend fun changeTheme(mode: Int) {
+        AppCompatDelegate.setDefaultNightMode(mode)
         preferencesHelper.selectedThemeMode = mode
         dataStoreHelper.changeTheme(mode)
     }
 
     override suspend fun getThemeMode(): Flow<Int> {
+        AppCompatDelegate.setDefaultNightMode(preferencesHelper.selectedThemeMode)
         return dataStoreHelper.getThemeMode()
     }
 
