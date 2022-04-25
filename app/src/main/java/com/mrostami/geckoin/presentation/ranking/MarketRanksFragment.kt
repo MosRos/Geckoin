@@ -7,7 +7,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -60,39 +62,54 @@ class MarketRanksFragment : Fragment(R.layout.market_rank_fragment) {
     }
 
     private fun setObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.rankedCoinsState.collectLatest { result ->
-                when (result) {
-                    is Result.Success -> {
-                        updateRanksAdapter(result.data)
-                        binding.progressBar.isVisible = false
-                    }
-                    is Result.Error -> {
-                        binding.progressBar.isVisible = false
-                        activity?.showSnack(
-                            message = result.message ?: result.exception.message
-                            ?: "An Error occurred"
-                        )
-                    }
-                    is Result.Loading -> {
-                        binding.progressBar.isVisible = true
-                    }
-                    else -> {
-                        binding.progressBar.isVisible = true
-                    }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                // collect ranks
+                launch {
+                    collectPagedRanks()
+                }
+
+                // collect paging loading state
+                launch {
+                   collectPagingLoadingState()
                 }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            marketRanksAdapter?.loadStateFlow?.collectLatest { loadingState ->
-                ranksLoadingStateAdapter?.loadState = loadingState.source.append
-                if (loadingState.source.append == LoadState.Loading) {
-                    binding.pagingProgress.isVisible = true
-                } else {
-                    delay(1000)
-                    binding.pagingProgress.isVisible = false
+    private suspend fun collectPagedRanks() {
+        viewModel.rankedCoinsStateFlow.collectLatest { result ->
+            when (result) {
+                is Result.Success -> {
+                    updateRanksAdapter(result.data)
+                    binding.progressBar.isVisible = false
                 }
+                is Result.Error -> {
+                    binding.progressBar.isVisible = false
+                    activity?.showSnack(
+                        message = result.message ?: result.exception.message
+                        ?: "An Error occurred"
+                    )
+                }
+                is Result.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                else -> {
+                    binding.progressBar.isVisible = true
+                }
+            }
+        }
+    }
+
+    private suspend fun collectPagingLoadingState() {
+        marketRanksAdapter?.loadStateFlow?.collectLatest { loadingState ->
+            ranksLoadingStateAdapter?.loadState = loadingState.source.append
+            if (loadingState.source.append == LoadState.Loading) {
+                binding.pagingProgress.isVisible = true
+            } else {
+                delay(1000)
+                binding.pagingProgress.isVisible = false
             }
         }
     }

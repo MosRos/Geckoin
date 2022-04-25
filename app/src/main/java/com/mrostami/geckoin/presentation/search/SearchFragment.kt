@@ -7,7 +7,10 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -59,18 +62,24 @@ class SearchFragment : Fragment(R.layout.search_fragment) {
 
     private fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.searchResultsState.collect { result ->
-                updateCoinsAdapter(result)
-            }
-        }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // collect search result
+                launch {
+                    viewModel.searchResultsStateFlow.collect { result ->
+                        updateCoinsAdapter(result)
+                    }
+                }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            coinsAdapter?.loadStateFlow?.collect { loadingState ->
-                if (loadingState.source.append == LoadState.Loading) {
-                    binding.searchProgress.isVisible = true
-                } else {
-                    delay(700)
-                    binding.searchProgress.isVisible = false
+                // collect paging adapter loading state
+                launch {
+                    coinsAdapter?.loadStateFlow?.collect { loadingState ->
+                        if (loadingState.source.append == LoadState.Loading) {
+                            binding.searchProgress.isVisible = true
+                        } else {
+                            delay(700)
+                            binding.searchProgress.isVisible = false
+                        }
+                    }
                 }
             }
         }

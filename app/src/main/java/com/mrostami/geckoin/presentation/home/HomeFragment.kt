@@ -12,7 +12,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +36,6 @@ import com.mrostami.geckoin.model.*
 import com.mrostami.geckoin.presentation.coin_details.CoinDetailsFragmentDirections
 import com.mrostami.geckoin.presentation.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -82,103 +83,126 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun setObservables() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // collect Bitcoin price chart entries
+                launch {
+                    collectBitcoinPriceInfo()
+                }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.bitcoinPriceInfoState.collect { result ->
-                when (result) {
-                    is Result.Empty -> {
+                // collect Bitcoin Chart info
+                launch {
+                    collectBitcoinChartInfo()
+                }
+
+                // collect market global info
+                launch {
+                    collectGlobalMarketInfo()
+                }
+
+                // collect trend coins
+                launch {
+                    collectTrendCoins()
+                }
+            }
+        }
+    }
+
+    private suspend fun collectBitcoinPriceInfo() {
+        viewModel.bitcoinPriceInfoStateFlow.collect { result ->
+            when (result) {
+                is Result.Empty -> {
 //                        binding.progressBar.isVisible = false
-                    }
-                    is Result.Success -> {
+                }
+                is Result.Success -> {
 //                        binding.progressBar.isVisible = false
-                        updateBitcoinPriceInfo(result.data)
-                    }
-                    is Result.Error -> {
+                    updateBitcoinPriceInfo(result.data)
+                }
+                is Result.Error -> {
 //                        binding.progressBar.isVisible = false
-                        Timber.e("Bitcoin Price Info Error: ${result.message}")
-                        context?.showToast(
-                            message = "Error getting Bitcoin info: ${result.message}",
-                            length = Toast.LENGTH_SHORT
-                        )
-                    }
-                    is Result.Loading -> {
+                    Timber.e("Bitcoin Price Info Error: ${result.message}")
+                    context?.showToast(
+                        message = "Error getting Bitcoin info: ${result.message}",
+                        length = Toast.LENGTH_SHORT
+                    )
+                }
+                is Result.Loading -> {
 //                        binding.progressBar.isVisible = true
-                    }
                 }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.bitcoinChartInfoState.collect { result ->
-                when (result) {
-                    is Result.Empty -> {
-                        binding.bitcoinProgressBar.isVisible = false
-                    }
-                    is Result.Success -> {
-                        binding.bitcoinProgressBar.isVisible = false
-                        updateBtcPriceChart(result.data)
-                    }
-                    is Result.Error -> {
-                        binding.bitcoinProgressBar.isVisible = false
-                        Timber.e("Bitcoin Chart Error: ${result.message}")
-                        context?.showToast(
-                            message = "Error getting Bitcoin Chart info: ${result.message}",
-                            length = Toast.LENGTH_SHORT
-                        )
-                    }
-                    is Result.Loading -> {
-                        binding.bitcoinProgressBar.isVisible = true
-                    }
+    private suspend fun collectBitcoinChartInfo() {
+        viewModel.bitcoinChartInfoStateFlow.collect { result ->
+            when (result) {
+                is Result.Empty -> {
+                    binding.bitcoinProgressBar.isVisible = false
+                }
+                is Result.Success -> {
+                    binding.bitcoinProgressBar.isVisible = false
+                    updateBtcPriceChart(result.data)
+                }
+                is Result.Error -> {
+                    binding.bitcoinProgressBar.isVisible = false
+                    Timber.e("Bitcoin Chart Error: ${result.message}")
+                    context?.showToast(
+                        message = "Error getting Bitcoin Chart info: ${result.message}",
+                        length = Toast.LENGTH_SHORT
+                    )
+                }
+                is Result.Loading -> {
+                    binding.bitcoinProgressBar.isVisible = true
                 }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.marketInfoState.collect { result ->
-                when (result) {
-                    is Result.Empty -> {
-                        binding.dominanceProgressBar.isVisible = false
-                    }
-                    is Result.Success -> {
-                        binding.dominanceProgressBar.isVisible = false
-                        updateDominanceChart(result.data)
-                    }
-                    is Result.Error -> {
-                        binding.dominanceProgressBar.isVisible = false
-                        Timber.e("Global Info Error: ${result.message}")
-                        context?.showToast(
-                            message = "Error getting global info: ${result.message}",
-                            length = Toast.LENGTH_SHORT
-                        )
-                    }
-                    is Result.Loading -> {
-                        binding.dominanceProgressBar.isVisible = true
-                    }
+    private suspend fun collectGlobalMarketInfo() {
+        viewModel.marketInfoStateFlow.collect { result ->
+            when (result) {
+                is Result.Empty -> {
+                    binding.dominanceProgressBar.isVisible = false
+                }
+                is Result.Success -> {
+                    binding.dominanceProgressBar.isVisible = false
+                    updateDominanceChart(result.data)
+                }
+                is Result.Error -> {
+                    binding.dominanceProgressBar.isVisible = false
+                    Timber.e("Global Info Error: ${result.message}")
+                    context?.showToast(
+                        message = "Error getting global info: ${result.message}",
+                        length = Toast.LENGTH_SHORT
+                    )
+                }
+                is Result.Loading -> {
+                    binding.dominanceProgressBar.isVisible = true
                 }
             }
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
-            viewModel.trendCoinsState.collect { result ->
-                when (result) {
-                    is Result.Empty -> {
-                        binding.trendCoinsProgressBar.isVisible = false
-                    }
-                    is Result.Success -> {
-                        binding.trendCoinsProgressBar.isVisible = false
-                        updateTrendAdapter(result.data)
-                    }
-                    is Result.Error -> {
-                        binding.trendCoinsProgressBar.isVisible = false
-                        Timber.e("TrendCoins Error: ${result.message}")
-                        context?.showToast(
-                            message = "Error Getting Trend coins: ${result.message}",
-                            length = Toast.LENGTH_SHORT
-                        )
-                    }
-                    is Result.Loading -> {
-                        binding.trendCoinsProgressBar.isVisible = true
-                    }
+    private suspend fun collectTrendCoins() {
+        viewModel.trendCoinsStateFlow.collect { result ->
+            when (result) {
+                is Result.Empty -> {
+                    binding.trendCoinsProgressBar.isVisible = false
+                }
+                is Result.Success -> {
+                    binding.trendCoinsProgressBar.isVisible = false
+                    updateTrendAdapter(result.data)
+                }
+                is Result.Error -> {
+                    binding.trendCoinsProgressBar.isVisible = false
+                    Timber.e("TrendCoins Error: ${result.message}")
+                    context?.showToast(
+                        message = "Error Getting Trend coins: ${result.message}",
+                        length = Toast.LENGTH_SHORT
+                    )
+                }
+                is Result.Loading -> {
+                    binding.trendCoinsProgressBar.isVisible = true
                 }
             }
         }

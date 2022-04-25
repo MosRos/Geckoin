@@ -9,6 +9,7 @@ import com.mrostami.geckoin.model.Coin
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,9 +19,8 @@ class SearchViewModel @Inject constructor(
     private val searchCoinsUseCase: SearchCoinsUseCase
 ) : ViewModel() {
 
-    val searchResultsState: MutableStateFlow<PagingData<Coin>> =
-        MutableStateFlow(PagingData.empty())
-
+    private val searchResultsState: MutableStateFlow<PagingData<Coin>> = MutableStateFlow(PagingData.empty())
+    val searchResultsStateFlow: StateFlow<PagingData<Coin>> = searchResultsState
     fun searchCoins(searchInput: String?) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = searchCoinsUseCase.invoke(

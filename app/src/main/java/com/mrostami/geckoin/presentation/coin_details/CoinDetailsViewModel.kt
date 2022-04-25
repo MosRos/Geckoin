@@ -12,6 +12,7 @@ import com.mrostami.geckoin.model.SimplePriceInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +25,8 @@ class CoinDetailsViewModel @Inject constructor(
 
     var coinId: String? = null
 
-    val coinInfoState: MutableStateFlow<Result<CoinDetailsInfo>> = MutableStateFlow(Result.Empty)
+    private val coinInfoState: MutableStateFlow<Result<CoinDetailsInfo>> = MutableStateFlow(Result.Empty)
+    val coinInfoStateFlow: StateFlow<Result<CoinDetailsInfo>> = coinInfoState
     fun getDetailsInfo(coinId: String) {
         viewModelScope.launch( Dispatchers.IO) {
             val result = coinDetailsUseCase.invoke(coinId)
@@ -32,7 +34,8 @@ class CoinDetailsViewModel @Inject constructor(
         }
     }
 
-    val simplePriceInfoState: MutableStateFlow<Result<SimplePriceInfo>> = MutableStateFlow(Result.Empty)
+    private val simplePriceInfoState: MutableStateFlow<Result<SimplePriceInfo>> = MutableStateFlow(Result.Empty)
+    val simplePriceInfoStateFlow: StateFlow<Result<SimplePriceInfo>> = simplePriceInfoState
     fun getPriceInfo(coinId: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val result = simplePriceUseCase.invoke(coinId)

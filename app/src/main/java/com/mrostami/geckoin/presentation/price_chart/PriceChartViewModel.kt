@@ -8,6 +8,7 @@ import com.mrostami.geckoin.model.PriceEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,7 +18,8 @@ class PriceChartViewModel @Inject constructor(
     private val priceChartUseCase: PriceChartUseCase
 ) : ViewModel() {
 
-    val priceChartInfoState: MutableStateFlow<Result<List<PriceEntry>>> = MutableStateFlow(Result.Empty)
+    private val priceChartInfoState: MutableStateFlow<Result<List<PriceEntry>>> = MutableStateFlow(Result.Empty)
+    val priceChartInfoStateFlow: StateFlow<Result<List<PriceEntry>>> = priceChartInfoState
     fun getPriceChartInfo(coinId: String) {
         viewModelScope.launch( Dispatchers.IO) {
             val result = priceChartUseCase.invoke(coinId)
