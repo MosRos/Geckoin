@@ -12,13 +12,13 @@ In this sample project I tried to develop a standard and modern android app with
 
 ### Features
 * Kotlin
-* Clean Architecture MVVM Design Pattern
-* Offline-First with Repository Pattern
-* Kotlin Coroutines & Flows for concurrency, observer patten and data streaming.
-* ViewBinding: I prefered viewbinding over databinding because of code rigidity and an easeir path to migrate to jetpack compose.
-* Room and DataStore For Data Persistence and caching. 
-* Dagger Hilt for Dependency injection. 
-* WorkManager for background task and syncing coins database.
+* Clean Architecture MVVM design pattern
+* Offline-First with repository pattern(all screens except coin details page)
+* Kotlin Coroutines & Flows for concurrency, observer pattern and data streaming.
+* ViewBinding: I preferred viewbinding to databinding because of code rigidity and and easier path to migrate to jetpack compose.
+* Room & DataStore For data persistence and caching. 
+* Dagger Hilt for dependency injection. 
+* WorkManager for background task and synchronizing coins database.
 * Paging 3.0: for pagination with offline support. 
 * Light/Dark Mode and Material design
 * OkHttp and Retrofit with coroutines for networking
