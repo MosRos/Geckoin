@@ -3,9 +3,10 @@ Geckoin is a cryptocurrency simple app for basic market info, top coins list and
 In this sample project I tried to develop a standard and modern android app with best practices and some the most useful jetpack components.  
 
 <p float="left">
-<img src="screenshots/1_dark_screen_home.jpg" width="30%"/>
-<img src="screenshots/2_dark_screen_list.jpg" width="30%"/>
-<img src="screenshots/3_dark_screen_search.jpg" width="30%"/>
+  <img src="screenshots/0_light_screen_home.jpg" width="23%"/>
+  <img src="screenshots/1_dark_screen_home.jpg" width="23%"/>
+  <img src="screenshots/2_dark_screen_list.jpg" width="23%"/>
+  <img src="screenshots/3_dark_screen_search.jpg" width="23%"/>
 </p>
 
 
